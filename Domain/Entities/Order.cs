@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Order : BaseEntitie
+public class Order : BaseEntity
 {
     public Guid OrderItemId { get; set; }
     
@@ -14,5 +14,5 @@ public class Order : BaseEntitie
     
     public virtual User? User { get; set; } 
     
-    public virtual OrderItem? OrderItem { get; set; }
+    public virtual IEnumerable<OrderItem>? OrderItems { get; set; }
 }

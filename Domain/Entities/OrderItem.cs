@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class OrderItem : BaseEntitie
+public class OrderItem : BaseEntity
 {
     public Guid ProductId { get; set; }
 

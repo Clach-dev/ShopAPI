@@ -1,10 +1,10 @@
 ﻿namespace Domain.Entities;
 
-public class Category : BaseEntitie
+public class Category : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
     
     public string? Description { get; set; }
     
-    public IEnumerable<Product>? Product { get; set; }
+    public virtual IEnumerable<Product>? Products { get; set; }
 }
