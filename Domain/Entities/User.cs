@@ -2,7 +2,7 @@
 
 namespace Domain.Entities;
 
-public class User : BaseEntitie
+public class User : BaseEntity
 {
     public Guid RefreshTokenId { get; set; }
     
@@ -23,4 +23,6 @@ public class User : BaseEntitie
     public Roles Role { get; set; } 
     
     public virtual RefreshToken? RefreshToken { get; set; }
+    
+    public virtual IEnumerable<Order>? Orders { get; set; }
 }

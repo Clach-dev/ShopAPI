@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Product : BaseEntitie
+public class Product : BaseEntity
 {
     public string Name { get; set; } = String.Empty;
     
@@ -10,5 +10,7 @@ public class Product : BaseEntitie
     
     public int Amount { get; set; }
     
-    public IEnumerable<Category>? Categories { get; set; }
+    public virtual IEnumerable<Category>? Categories { get; set; }
+    
+    public virtual IEnumerable<OrderItem>? OrderItems { get; set; }
 }

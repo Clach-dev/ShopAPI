@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public abstract class BaseEntitie
+public abstract class BaseEntity
 {
     public Guid Id { get; set; }
 }
