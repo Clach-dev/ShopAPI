@@ -1,0 +1,9 @@
+﻿services:
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Pa55w0rd!"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
