@@ -1,0 +1,39 @@
+Index: .idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"RiderProjectSettingsUpdater\">\r\n    <option name=\"singleClickDiffPreview\" value=\"1\" />\r\n    <option name=\"vcsConfiguration\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml b/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml
+--- a/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml	(revision 97a9f7d2f5898eff133d7edf20a81fb938a95577)
++++ b/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml	(date 1739542946164)
+@@ -1,7 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="RiderProjectSettingsUpdater">
+-    <option name="singleClickDiffPreview" value="1" />
+-    <option name="vcsConfiguration" value="3" />
++    <option name="vcsConfiguration" value="2" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/.idea.ShopAPI/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\" defaultProject=\"true\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.idea.ShopAPI/.idea/vcs.xml b/.idea/.idea.ShopAPI/.idea/vcs.xml
+--- a/.idea/.idea.ShopAPI/.idea/vcs.xml	(revision 97a9f7d2f5898eff133d7edf20a81fb938a95577)
++++ b/.idea/.idea.ShopAPI/.idea/vcs.xml	(date 1739542946164)
+@@ -1,4 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="VcsDirectoryMappings" defaultProject="true" />
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
+ </project>
+\ No newline at end of file
