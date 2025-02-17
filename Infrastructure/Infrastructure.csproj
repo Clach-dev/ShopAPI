@@ -7,11 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <Compile Remove="Data\Repositories\**" />
+      <Compile Include="Data\Repositories\BaseRepository.cs" />
+      <Compile Include="Data\Repositories\CategoryRepository.cs" />
+      <Compile Include="Data\Repositories\OrderItemRepository.cs" />
+      <Compile Include="Data\Repositories\OrderRepository.cs" />
+      <Compile Include="Data\Repositories\ProductRepository.cs" />
+      <Compile Include="Data\Repositories\RefreshTokenRepository.cs" />
+      <Compile Include="Data\Repositories\UnitOfWork.cs" />
+      <Compile Include="Data\Repositories\UserRepository.cs" />
     </ItemGroup>
 
     <ItemGroup>
