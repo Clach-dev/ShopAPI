@@ -8,9 +8,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c0f8ab3e-d064-4f8f-834b-44293b0043f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Domain/Enums/Roles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/projectSettingsUpdater.xml" afterDir="false" />
+    <list default="true" id="3b9f75a2-db09-49f3-b7f3-1b8ecaf151e2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Category/CreateCategoryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Category/DeleteCategoryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Category/ReadCategoryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Category/UpdateCategoryDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Order/CreateOrderDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Order/DeleteOrderDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Order/ReadOrderDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Order/UpdateOrderDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Product/CreateProductDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Product/DeleteProductDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Product/ReadProductDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Product/UpdateProductDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/Token/ReadTokenDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/AuthUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/DeleteUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/ReadUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/ReadUserReducedDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/ReadUserRoleDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/RegisterUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/UpdateUserDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Common/Dtos/User/UpdateUserRoleDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ShopAPI/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,29 +41,28 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "RomanSmol"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Clach-dev/ShopAPI&quot;,
-    &quot;accountId&quot;: &quot;1650772d-cdc6-4a54-b539-69b6dec1da46&quot;
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;RomanSmol&quot;
   }
 }</component>
-  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Clach-dev/ShopAPI.git&quot;,
+    &quot;accountId&quot;: &quot;899abd2b-f215-4618-aa2d-191d8c35e3b2&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2t0NMAD4Nnyxu1PyBZbtxRA7f3o" />
+  <component name="ProjectId" id="2t8NRmjfB1MX4DGnFJklwowR6Tg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -51,20 +70,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "feature/entities",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/dto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Roma\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Roma\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Roma\\AppData\\Local\\Symbols\\src&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Presentation: http">
     <configuration name="Presentation: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
@@ -100,64 +123,29 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c0f8ab3e-d064-4f8f-834b-44293b0043f3" name="Changes" comment="" />
-      <created>1739484983931</created>
+      <changelist id="3b9f75a2-db09-49f3-b7f3-1b8ecaf151e2" name="Changes" comment="" />
+      <created>1739729737738</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1739484983931</updated>
-      <workItem from="1739484985555" duration="331000" />
+      <updated>1739729737738</updated>
+      <workItem from="1739729739954" duration="1963000" />
+      <workItem from="1739783311426" duration="5292000" />
     </task>
-    <task id="LOCAL-00001" summary="init">
-      <option name="closed" value="true" />
-      <created>1739485094083</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1739485094083</updated>
-    </task>
-    <task id="LOCAL-00002" summary="projects creation">
-      <option name="closed" value="true" />
-      <created>1739485318717</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1739485318717</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="master" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="init" />
-    <MESSAGE value="projects creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
