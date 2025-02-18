@@ -42,6 +42,7 @@ public static class InfrastructureInjection
     private static IServiceCollection AddAlgorithms(this IServiceCollection services)
     {
         return services
-            .AddScoped<ITokensGenerator, TokensGenerator>();
+            .AddScoped<ITokensGenerator, TokensGenerator>()
+            .AddScoped<IPasswordHasher, PasswordHasher>();
     }
 }
