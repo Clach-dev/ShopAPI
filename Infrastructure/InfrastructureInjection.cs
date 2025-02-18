@@ -1,4 +1,6 @@
-﻿using Domain.Interfaces.IRepositories;
+﻿using Domain.Interfaces.IAlgorithms;
+using Domain.Interfaces.IRepositories;
+using Infrastructure.Algorithms;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,5 +37,11 @@ public static class InfrastructureInjection
             .AddScoped<IOrderItemRepository, OrderItemRepository>()
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IUnitOfWork, UnitOfWork>();
+    }
+    
+    private static IServiceCollection AddAlgorithms(this IServiceCollection services)
+    {
+        return services
+            .AddScoped<ITokensGenerator, TokensGenerator>();
     }
 }

@@ -3,12 +3,13 @@ using System.Security.Claims;
 using System.Text;
 using Application.Common.Utils;
 using Domain.Entities;
+using Domain.Interfaces.IAlgorithms;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Algorithms;
 
-public class TokensGenerator(IConfiguration configuration)
+public class TokensGenerator(IConfiguration configuration) : ITokensGenerator
 {
     public string GenerateAccessToken(User user)
     {
