@@ -15,7 +15,8 @@ public static class InfrastructureInjection
     {
         return services
             .AddDatabase(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddAlgorithms();
     }
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
