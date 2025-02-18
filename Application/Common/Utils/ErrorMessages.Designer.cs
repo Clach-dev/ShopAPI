@@ -21,14 +21,14 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages {
+    public static class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ErrorMessages() {
+        static ErrorMessages() {
         }
         
         /// <summary>
@@ -56,6 +56,15 @@ namespace Application.Common.Utils {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jwt settings not found.
+        /// </summary>
+        public static string JwtSettingsNotFoundError {
+            get {
+                return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
             }
         }
     }
