@@ -2,6 +2,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
+using Presentation.Common.Middleware;
 
 namespace Presentation.Common.Extensions;
 
@@ -44,6 +45,8 @@ public static class ProgramExtension
 
     public static WebApplication ConfigureMiddleware(this WebApplication app)
     {
+        app.UseMiddleware<ExceptionMiddleware>();
+        
         if (app.Environment.IsDevelopment())
         {
             app
@@ -53,6 +56,7 @@ public static class ProgramExtension
         
         app
             .UseHttpsRedirection()
+            .UseMiddleware<LoggingMiddleware>()
             .UseAuthentication()
             .UseAuthorization();
         
