@@ -5,6 +5,6 @@
 /// </summary>
 /// <param name="PhoneNumber">string that contains PhoneNumber of User</param>
 /// <param name="Password">string that contains Password of User</param>
-public record AuthUserDto(
+public record AuthenticationUserDto(
     string PhoneNumber, 
     string Password);

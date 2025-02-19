@@ -28,7 +28,6 @@
       <Folder Include="Common\Validators\OrderItem\" />
       <Folder Include="Common\Validators\Order\" />
       <Folder Include="Common\Validators\Product\" />
-      <Folder Include="Common\Validators\User\" />
     </ItemGroup>
 
 </Project>

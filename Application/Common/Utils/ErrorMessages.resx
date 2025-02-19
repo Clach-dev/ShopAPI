@@ -21,4 +21,16 @@
     <data name="JwtSettingsNotFoundError" xml:space="preserve">
         <value>Jwt settings not found</value>
     </data>
+    <data name="UserIdNotFoundError" xml:space="preserve">
+        <value>User with this id is not found</value>
+    </data>
+    <data name="ExistingUserPhoneNumberError" xml:space="preserve">
+        <value>User with this phone number is already exists</value>
+    </data>
+    <data name="UserPhoneNotFoundError" xml:space="preserve">
+        <value>User phone number is not found</value>
+    </data>
+    <data name="WrongPasswordError" xml:space="preserve">
+        <value>User password is wrong</value>
+    </data>
 </root>

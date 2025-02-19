@@ -21,14 +21,14 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public static class ErrorMessages {
+    public class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        static ErrorMessages() {
+        internal ErrorMessages() {
         }
         
         /// <summary>
@@ -60,11 +60,47 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User with this phone number is already exists.
+        /// </summary>
+        internal static string ExistingUserPhoneNumberError {
+            get {
+                return ResourceManager.GetString("ExistingUserPhoneNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jwt settings not found.
         /// </summary>
         public static string JwtSettingsNotFoundError {
             get {
                 return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User with this id is not found.
+        /// </summary>
+        internal static string UserIdNotFoundError {
+            get {
+                return ResourceManager.GetString("UserIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User phone number is not found.
+        /// </summary>
+        internal static string UserPhoneNotFoundError {
+            get {
+                return ResourceManager.GetString("UserPhoneNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User password is wrong.
+        /// </summary>
+        internal static string WrongPasswordError {
+            get {
+                return ResourceManager.GetString("WrongPasswordError", resourceCulture);
             }
         }
     }
