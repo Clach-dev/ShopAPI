@@ -15,7 +15,8 @@ public static class InfrastructureInjection
     {
         return services
             .AddDatabase(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddAlgorithms();
     }
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
@@ -42,6 +43,7 @@ public static class InfrastructureInjection
     private static IServiceCollection AddAlgorithms(this IServiceCollection services)
     {
         return services
-            .AddScoped<ITokensGenerator, TokensGenerator>();
+            .AddScoped<ITokensGenerator, TokensGenerator>()
+            .AddScoped<IPasswordHasher, PasswordHasher>();
     }
 }
