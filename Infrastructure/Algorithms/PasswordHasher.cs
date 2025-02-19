@@ -6,7 +6,7 @@ using Castle.Components.DictionaryAdapter;
 
 namespace Infrastructure.Algorithms;
 
-public class PasswordHasher(IConfiguration configuration) : IPasswordHasher
+public class PasswordHasher() : IPasswordHasher
 {
     public string HashPassword(string password)
     {
