@@ -27,6 +27,7 @@ public class TokensGenerator(IConfiguration configuration) : ITokensGenerator
             claims: claims,
             expires: tokenExpires,
             issuer: GetJwtSetting<string>("Issuer"),
+            audience: GetJwtSetting<string>("Audience"),
             signingCredentials: signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(securityToken);

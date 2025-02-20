@@ -40,7 +40,6 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         CancellationToken cancellationToken = default)
     {
         return await _entities
-            .AsNoTracking()
             .Where(predicate)
             .Skip((pageInfo.PageNumber - 1) * pageInfo.PageSize)
             .Take(pageInfo.PageSize)

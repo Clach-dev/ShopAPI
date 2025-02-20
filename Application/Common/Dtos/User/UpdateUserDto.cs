@@ -11,7 +11,6 @@
 /// <param name="BirthDate">DateTime that contains BirthDate of User</param>
 /// <param name="Email">string that contains Email of User</param>
 public record UpdateUserDto(
-    Guid Id,
     string? PhoneNumber,
     string? Password,
     string? LastName,

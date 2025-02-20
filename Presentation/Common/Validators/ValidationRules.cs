@@ -81,7 +81,6 @@ public static class ValidationRules
     public static IRuleBuilder<T, Roles> RoleRule<T>(this IRuleBuilder<T, Roles> ruleBuilder)
     {
         return ruleBuilder
-            .NotEmpty().WithMessage("The role is required")
             .Must(role => Enum.IsDefined(typeof(Roles), role))
             .WithMessage("Role must be a valid value.");
     }

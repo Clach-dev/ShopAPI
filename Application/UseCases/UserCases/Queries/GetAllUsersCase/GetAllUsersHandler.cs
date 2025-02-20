@@ -10,16 +10,16 @@ namespace Application.UseCases.UserCases.Queries.GetAllUsersCase;
 public class GetAllUsersHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper)
-    : IRequestHandler<GetAllUsersQuery, Result<IEnumerable<ReadUserDto>>>
+    : IRequestHandler<GetAllUsersQuery, Result<ReadUsersDto>>
 {
-    public async Task<Result<IEnumerable<ReadUserDto>>> Handle(
+    public async Task<Result<ReadUsersDto>> Handle(
         GetAllUsersQuery getAllUsersQuery,
         CancellationToken cancellationToken)
     {
         var users = await unitOfWork.Users.GetAllAsync(mapper.Map<PageInfo>(getAllUsersQuery.PageInfoDto), cancellationToken);
 
-        var usersReadDto = mapper.Map<IEnumerable<ReadUserDto>>(users);
-
+        var usersReadDto = new ReadUsersDto(mapper.Map<IEnumerable<ReadUserDto>>(users.Item1), users.Item2);
+        
         return ResultBuilder.SuccessResult(usersReadDto);
     }
 }
