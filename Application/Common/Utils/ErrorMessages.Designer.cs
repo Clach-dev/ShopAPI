@@ -21,7 +21,7 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorMessages {
+    internal class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -71,9 +71,36 @@ namespace Application.Common.Utils {
         /// <summary>
         ///   Looks up a localized string similar to Jwt settings not found.
         /// </summary>
-        public static string JwtSettingsNotFoundError {
+        internal static string JwtSettingsNotFoundError {
             get {
                 return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order with this Id not found.
+        /// </summary>
+        internal static string OrderIdNotFound {
+            get {
+                return ResourceManager.GetString("OrderIdNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item with this Id not found.
+        /// </summary>
+        internal static string OrderItemIdNotFoundError {
+            get {
+                return ResourceManager.GetString("OrderItemIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product with this Id not found.
+        /// </summary>
+        internal static string ProductIdNotFound {
+            get {
+                return ResourceManager.GetString("ProductIdNotFound", resourceCulture);
             }
         }
         
