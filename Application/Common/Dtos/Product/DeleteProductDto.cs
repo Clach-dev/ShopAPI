@@ -5,4 +5,4 @@
 /// </summary>
 /// <param name="Id">Guid that contains identifier of Product</param>
 public record DeleteProductDto(
-    Guid Id);
+    Guid ProductId);
