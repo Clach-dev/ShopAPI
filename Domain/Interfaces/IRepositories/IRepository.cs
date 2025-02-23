@@ -9,7 +9,7 @@ public interface IRepository<TEntity> where TEntity : class
     
     Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     
-    Task<IEnumerable<TEntity>> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, PageInfo pageInfo, CancellationToken cancellationToken = default);
+    Task<(IEnumerable<TEntity>, int)> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, PageInfo pageInfo, CancellationToken cancellationToken = default);
     
     Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
     

@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public class User : BaseEntity
 {
-    public Guid RefreshTokenId { get; set; }
+    public Guid? RefreshTokenId { get; set; }
     
     public string PhoneNumber { get; set; } = String.Empty;
     

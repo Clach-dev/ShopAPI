@@ -11,4 +11,6 @@ public record CreateProductDto(
     string Name,
     string? Description,
     double Price,
-    int Amount);
+    int Amount,
+    IEnumerable<Guid>? CategoryIds,
+    IEnumerable<Guid>? OrderItemIds);

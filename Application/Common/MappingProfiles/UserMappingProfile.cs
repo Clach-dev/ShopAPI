@@ -4,7 +4,6 @@ using Application.UseCases.UserCases.Commands.DeleteUserCase;
 using Application.UseCases.UserCases.Commands.RegisterUserCase;
 using Application.UseCases.UserCases.Commands.UpdateUserCase;
 using Application.UseCases.UserCases.Commands.UpdateUserRoleCase;
-using Application.UseCases.UserCases.Queries.GetAllUsersCase;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;

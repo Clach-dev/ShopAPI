@@ -13,4 +13,6 @@ public record UpdateProductDto(
     string? Name,
     string? Description,
     double? Price,
-    int? Amount);
+    int? Amount,
+    IEnumerable<Guid> OrderItemIds,
+    IEnumerable<Guid> CategoryIds);

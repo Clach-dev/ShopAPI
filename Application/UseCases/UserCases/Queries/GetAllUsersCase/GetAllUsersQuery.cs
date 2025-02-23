@@ -7,4 +7,4 @@ namespace Application.UseCases.UserCases.Queries.GetAllUsersCase;
 
 public record GetAllUsersQuery(
     PageInfoDto PageInfoDto)
-    : IRequest<Result<IEnumerable<ReadUserDto>>>;
+    : IRequest<Result<ReadUsersDto>>;

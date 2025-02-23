@@ -7,9 +7,6 @@ public class UpdateUserDtoValidator : AbstractValidator<UpdateUserDto>
 {
     public UpdateUserDtoValidator()
     {
-        RuleFor(x => x.Id)
-            .GuidRule();
-
         RuleFor(x => x.PhoneNumber)!
             .PhoneNumberRule();
 

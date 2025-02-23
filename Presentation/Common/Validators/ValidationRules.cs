@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Domain.Enums;
+﻿using Domain.Enums;
 using FluentValidation;
 
 namespace Presentation.Common.Validators;
@@ -85,6 +84,58 @@ public static class ValidationRules
             .NotEmpty().WithMessage("The role is required")
             .Must(role => Enum.IsDefined(typeof(Roles), role))
             .WithMessage("Role must be a valid value.");
+    }
+    
+    public static IRuleBuilder<T, string> TitleRule<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder.
+            MaximumLength(50).WithMessage("The description must not exceed 300 characters.");
+    }
+    
+    public static IRuleBuilder<T, string> DescriptionRule<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder.
+            MaximumLength(300).WithMessage("The description must not exceed 300 characters.");
+    }
+    
+    public static IRuleBuilder<T, double> PriceRule<T>(this IRuleBuilder<T, double> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThan(0).WithMessage("Price must be greater than zero.")
+            .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
+            .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
+            .WithMessage("Price must have up to 2 decimal places.");
+    }
+
+    public static IRuleBuilder<T, double?> PriceRule<T>(this IRuleBuilder<T, double?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotNull().WithMessage("Price is required.")
+            .SetValidator(new InlineValidator<double?>()
+            {
+                v => v.RuleFor(x => x!.Value)
+                    .GreaterThan(0).WithMessage("Price must be greater than zero.")
+                    .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
+                    .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
+                    .WithMessage("Price must have up to 2 decimal places.")
+            });
+    }
+
+    public static IRuleBuilder<T, int> AmountRule<T>(this IRuleBuilder<T, int> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.");
+    }
+
+    public static IRuleBuilder<T, int?> AmountRule<T>(this IRuleBuilder<T, int?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotNull().WithMessage("Amount is required.")
+            .SetValidator(new InlineValidator<int?>()
+            {
+                v => v.RuleFor(x => x!.Value)
+                    .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.")
+            });
     }
 
     public static IRuleBuilder<T, string> StatusRule<T>(this IRuleBuilder<T, string> ruleBuilder)
