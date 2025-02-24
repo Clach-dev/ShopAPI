@@ -29,8 +29,7 @@ public class UpdateOrderHandler(
         }
         
         var orderItems = (await unitOfWork.OrderItems.GetByPredicateAsync(orderItem =>
-                updateOrderCommand.OrderItemIds.Contains(orderItem.Id), new PageInfo(), cancellationToken))
-            .ToList();
+                updateOrderCommand.OrderItemIds.Contains(orderItem.Id), new PageInfo(), cancellationToken)).Item1.ToList();
         if (orderItems.Count() != orderItemsCount)
         {
             return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.ProductIdNotFound);

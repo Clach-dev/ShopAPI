@@ -17,7 +17,7 @@ public class CreateOrderHandler(
         CancellationToken cancellationToken)
     {
         var orderItems = (await unitOfWork.OrderItems.GetByPredicateAsync(orderItem => 
-                createOrderCommand.OrderItemIds.Contains(orderItem.Id), new PageInfo(), cancellationToken))
+                createOrderCommand.OrderItemIds.Contains(orderItem.Id), new PageInfo(), cancellationToken)).Item1
             .ToList();
         if (orderItems.Count() != createOrderCommand.OrderItemIds.Count())
         {

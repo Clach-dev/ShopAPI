@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using System.Globalization;
+using Domain.Enums;
 using FluentValidation;
 
 namespace Presentation.Common.Validators;
