@@ -9,18 +9,18 @@ public class CreateOrderDtoValidator : AbstractValidator<CreateOrderDto>
     public CreateOrderDtoValidator()
     {
         RuleFor(x => x.TotalPrice)
-            .TotalPriceRule();
+            .NullableTotalPriceRule();
         
         RuleFor(x => x.Status)
             .StatusRule();
         
         RuleFor(x => x.DeliveryDate)
-            .DeliveryDateRule(); 
+            .NullableDeliveryDateRule(); 
         
         RuleFor(x => x.UserId)
             .GuidRule();
 
-        RuleFor(x => x.OrderItemIds)
-            .GuidListRule();
+        RuleFor(x => x.OrderItemIds)!
+            .NullableGuidListRule();
     }
 }
