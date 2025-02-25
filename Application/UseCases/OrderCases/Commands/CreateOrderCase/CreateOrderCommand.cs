@@ -5,9 +5,9 @@ using MediatR;
 namespace Application.UseCases.OrderCases.Commands.CreateOrderCase;
 
 public record CreateOrderCommand(
-    decimal TotalPrice,
+    decimal? TotalPrice,
     string Status,
-    DateTime DeliveryDate,
+    DateTime? DeliveryDate,
     Guid UserId,
-    IEnumerable<Guid> OrderItemIds)
+    IEnumerable<Guid>? OrderItemIds)
     : IRequest<Result<ReadOrderDto>>;

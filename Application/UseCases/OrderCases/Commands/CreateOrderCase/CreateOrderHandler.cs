@@ -16,18 +16,8 @@ public class CreateOrderHandler(
         CreateOrderCommand createOrderCommand,
         CancellationToken cancellationToken)
     {
-        var orderItems = (await unitOfWork.OrderItems.GetByPredicateAsync(orderItem => 
-                createOrderCommand.OrderItemIds.Contains(orderItem.Id),
-                new PageInfo(),
-                cancellationToken)).Item1
-            .ToList();
-        if (orderItems.Count() != createOrderCommand.OrderItemIds.Count())
-        {
-            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.ProductIdNotFound);
-        }
         
         var newOrder = mapper.Map<Order>(createOrderCommand);
-        newOrder.OrderItems = orderItems;
         
         await unitOfWork.Orders.CreateAsync(newOrder, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);

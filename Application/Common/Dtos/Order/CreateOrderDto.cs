@@ -9,8 +9,8 @@
 /// <param name="UserId">Guid that contains UserId of User</param>
 /// <param name="OrderItemIds">IEnumerable_Guid that contains Ids of OrderItems</param>
 public record CreateOrderDto(
-    decimal TotalPrice,
+    decimal? TotalPrice,
     string Status,
-    DateTime DeliveryDate,
+    DateTime? DeliveryDate,
     Guid UserId,
-    IEnumerable<Guid> OrderItemIds);
+    IEnumerable<Guid>? OrderItemIds);
