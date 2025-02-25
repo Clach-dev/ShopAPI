@@ -17,6 +17,7 @@ public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
         RuleFor(x => x.Price)
             .NotNull().WithMessage("Price is required.")
             .PriceRule();
+            
 
         RuleFor(x => x.Amount)
             .NotNull().WithMessage("Amount is required.")
