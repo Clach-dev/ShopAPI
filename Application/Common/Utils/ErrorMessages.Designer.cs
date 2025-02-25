@@ -21,7 +21,7 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages {
+    public class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -80,7 +80,7 @@ namespace Application.Common.Utils {
         /// <summary>
         ///   Looks up a localized string similar to Jwt settings not found.
         /// </summary>
-        internal static string JwtSettingsNotFoundError {
+        public static string JwtSettingsNotFoundError {
             get {
                 return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
             }
