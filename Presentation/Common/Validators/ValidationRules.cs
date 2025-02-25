@@ -194,4 +194,11 @@ public static class ValidationRules
             .Must(list => list.All(id => id != Guid.Empty))
             .WithMessage("OrderItemIds must not contain empty GUIDs.");
     }
+    
+    public static IRuleBuilder<T, IEnumerable<Guid>?> NullableGuidListRule<T>(this IRuleBuilder<T, IEnumerable<Guid>?> ruleBuilder)
+    {
+        return ruleBuilder
+            .Must(list => list != null && list.All(id => id != Guid.Empty))
+            .WithMessage("OrderItemIds must not contain empty GUIDs.");
+    }
 }
