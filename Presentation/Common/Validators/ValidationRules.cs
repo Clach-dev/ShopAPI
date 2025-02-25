@@ -99,25 +99,25 @@ public static class ValidationRules
             MaximumLength(300).WithMessage("The description must not exceed 300 characters.");
     }
     
-    public static IRuleBuilder<T, double> PriceRule<T>(this IRuleBuilder<T, double> ruleBuilder)
+    public static IRuleBuilder<T, decimal> PriceRule<T>(this IRuleBuilder<T, decimal> ruleBuilder)
     {
         return ruleBuilder
-            .GreaterThan(0).WithMessage("Price must be greater than zero.")
-            .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
-            .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
+            .GreaterThan(0m).WithMessage("Price must be greater than zero.")
+            .LessThanOrEqualTo(1_000_000m).WithMessage("Price must not exceed 1,000,000.")
+            .Must(price => Math.Abs(price * 100m - Math.Round(price * 100m)) < 0.0000000001m)
             .WithMessage("Price must have up to 2 decimal places.");
     }
 
-    public static IRuleBuilder<T, double?> PriceRule<T>(this IRuleBuilder<T, double?> ruleBuilder)
+    public static IRuleBuilder<T, decimal?> PriceRule<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
     {
         return ruleBuilder
             .NotNull().WithMessage("Price is required.")
-            .SetValidator(new InlineValidator<double?>()
+            .SetValidator(new InlineValidator<decimal?>()
             {
                 v => v.RuleFor(x => x!.Value)
-                    .GreaterThan(0).WithMessage("Price must be greater than zero.")
-                    .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
-                    .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
+                    .GreaterThan(0m).WithMessage("Price must be greater than zero.")
+                    .LessThanOrEqualTo(1_000_000m).WithMessage("Price must not exceed 1,000,000.")
+                    .Must(price => Math.Abs(price * 100m - Math.Round(price * 100m)) < 0.0000000001m)
                     .WithMessage("Price must have up to 2 decimal places.")
             });
     }

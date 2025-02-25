@@ -8,7 +8,7 @@ public record UpdateProductCommand(
     Guid Id,
     string? Name,
     string? Description,
-    double? Price,
+    decimal? Price,
     int? Amount,
     IEnumerable<Guid> CategoryIds,
     IEnumerable<Guid> OrderItemIds)
