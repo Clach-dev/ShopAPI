@@ -5,7 +5,7 @@ using MediatR;
 namespace Application.UseCases.OrderCases.Commands.CreateOrderCase;
 
 public record CreateOrderCommand(
-    double TotalPrice,
+    decimal TotalPrice,
     string Status,
     DateTime DeliveryDate,
     Guid UserId,

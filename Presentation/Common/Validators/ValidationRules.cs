@@ -147,7 +147,7 @@ public static class ValidationRules
                                                        "2 and 20 characters long.");
     } 
     
-    public static IRuleBuilder<T, double> TotalPriceRule<T>(this IRuleBuilder<T, double> ruleBuilder)
+    public static IRuleBuilder<T, decimal> TotalPriceRule<T>(this IRuleBuilder<T, decimal> ruleBuilder)
     {
         return ruleBuilder
             .GreaterThan(0).WithMessage("Total price must be greater than 0.")
@@ -155,7 +155,7 @@ public static class ValidationRules
             .WithMessage("Total price must contain a decimal part.");
     }
     
-    public static IRuleBuilder<T, double?> NullableTotalPriceRule<T>(this IRuleBuilder<T, double?> ruleBuilder)
+    public static IRuleBuilder<T, decimal?> NullableTotalPriceRule<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
     {
         return ruleBuilder
             .GreaterThan(0).WithMessage("Total price must be greater than 0.")

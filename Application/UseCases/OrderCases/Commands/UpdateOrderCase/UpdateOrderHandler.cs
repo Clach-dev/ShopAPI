@@ -20,7 +20,6 @@ public class UpdateOrderHandler(
         {
             return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderItemIdNotFoundError);
         }
-        int orderItemsCount = updateOrderCommand.OrderItemIds.Count();
         
         var currentOrder = await unitOfWork.Orders.GetByIdAsync(updateOrderCommand.Id, cancellationToken);
         if (currentOrder is null)
@@ -29,8 +28,11 @@ public class UpdateOrderHandler(
         }
         
         var orderItems = (await unitOfWork.OrderItems.GetByPredicateAsync(orderItem =>
-                updateOrderCommand.OrderItemIds.Contains(orderItem.Id), new PageInfo(), cancellationToken)).Item1.ToList();
-        if (orderItems.Count() != orderItemsCount)
+                updateOrderCommand.OrderItemIds.Contains(orderItem.Id),
+            new PageInfo(),
+            cancellationToken)).Item1
+            .ToList();
+        if (orderItems.Count() != updateOrderCommand.OrderItemIds.Count())
         {
             return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.ProductIdNotFound);
         }

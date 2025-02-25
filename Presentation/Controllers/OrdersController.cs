@@ -54,6 +54,23 @@ public class OrdersController(
         return Result(result);
     }
 
+    
+    /// <summary>
+    /// Get orders by filter operation
+    /// </summary>
+    /// <param name="getOrderByFilterDto">Dto containing filter parameters</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Result with filtered orders information</returns>
+    [HttpGet("filter")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetOrdersByFilter(
+        [FromQuery] GetOrderByFilterDto getOrderByFilterDto,
+        CancellationToken cancellationToken)
+    {
+        var result = await mediator.Send(mapper.Map<GetOrdersByFilterQuery>(getOrderByFilterDto), cancellationToken);
+        return Result(result);
+    }
+    
     /// <summary>
     /// Create a new order operation
     /// </summary>
@@ -61,7 +78,7 @@ public class OrdersController(
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with created order information</returns>
     [HttpPost]
-    [AllowAnonymous]
+    [Authorize(Policy = Policies.AuthenticateAccess)]
     public async Task<IActionResult> CreateOrder(
         [FromBody] CreateOrderDto createOrderDto,
         CancellationToken cancellationToken)
@@ -77,7 +94,7 @@ public class OrdersController(
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with updated order information</returns>
     [HttpPut]
-    [Authorize(Policy = Policies.OnlyUserAccess)]
+    [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> UpdateOrder(
         [FromBody] UpdateOrderDto updateOrderDto,
         CancellationToken cancellationToken)
@@ -99,22 +116,6 @@ public class OrdersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<DeleteOrderCommand>(deleteOrderDto), cancellationToken);
-        return Result(result);
-    }
-
-    /// <summary>
-    /// Get orders by filter operation
-    /// </summary>
-    /// <param name="getOrderByFilterDto">Dto containing filter parameters</param>
-    /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>Result with filtered orders information</returns>
-    [HttpGet("filter")]
-    [AllowAnonymous]
-    public async Task<IActionResult> GetOrdersByFilter(
-        [FromQuery] GetOrderByFilterDto getOrderByFilterDto,
-        CancellationToken cancellationToken)
-    {
-        var result = await mediator.Send(mapper.Map<GetOrdersByFilterQuery>(getOrderByFilterDto), cancellationToken);
         return Result(result);
     }
 }

@@ -17,6 +17,9 @@ public static class AuthConfigurationExtension
             
             options.AddPolicy(Policies.OnlyUserAccess, policy =>
                 policy.RequireRole(Roles.User.ToString()));
+            
+            options.AddPolicy(Policies.AuthenticateAccess, policy =>
+                policy.RequireAssertion(_ => true));
         });
 
         return services;

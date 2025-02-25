@@ -1,4 +1,3 @@
-using Application.Common.Dtos;
 using Application.Common.Dtos.Order;
 using Domain.Interfaces.IRepositories;
 using Application.Common.Utils;
@@ -11,16 +10,16 @@ namespace Application.UseCases.OrderCases.Queries.GetAllOrdersCase;
 public class GetAllOrdersHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper)
-    : IRequestHandler<GetAllOrdersQuery, Result<IEnumerable<ReadOrderDto>>>
+    : IRequestHandler<GetAllOrdersQuery, Result<ReadOrdersDto>>
 {
-    public async Task<Result<IEnumerable<ReadOrderDto>>> Handle(
+    public async Task<Result<ReadOrdersDto>> Handle(
         GetAllOrdersQuery getAllOrdersQuery,
         CancellationToken cancellationToken)
     {
-        var orders = await unitOfWork.Orders.GetAllAsync(mapper.Map<PageInfo>(getAllOrdersQuery), cancellationToken);
+        var orders = await unitOfWork.Orders.GetAllAsync(mapper.Map<PageInfo>(getAllOrdersQuery.PageInfoDto), cancellationToken);
+        
+        var ordersReadDto = new ReadOrdersDto(mapper.Map<IEnumerable<ReadOrderDto>>(orders.Item1), orders.Item2);
 
-        var ordersReadDto = mapper.Map<IEnumerable<ReadOrderDto>>(orders);
-
-        return ResultBuilder.SuccessResult(ordersReadDto); //
+        return ResultBuilder.SuccessResult(ordersReadDto);
     }
 }

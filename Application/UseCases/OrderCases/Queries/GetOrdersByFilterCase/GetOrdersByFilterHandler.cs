@@ -4,28 +4,26 @@ using Application.Common.Utils;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System.Linq.Expressions;
 
 namespace Application.UseCases.OrderCases.Queries.GetOrdersByFilterCase;
 
 public class GetOrdersByFilterHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper)
-    : IRequestHandler<GetOrdersByFilterQuery, Result<IEnumerable<ReadOrderDto>>>
+    : IRequestHandler<GetOrdersByFilterQuery, Result<ReadOrdersDto>>
 {
-public async Task<Result<IEnumerable<ReadOrderDto>>> Handle(
-        GetOrdersByFilterQuery query,
+public async Task<Result<ReadOrdersDto>> Handle(
+        GetOrdersByFilterQuery getOrdersByFilterQuery,
         CancellationToken cancellationToken)
     {
-        Expression<Func<Order, bool>> predicate = order =>
-            (query.Status == null || order.Status.Contains(query.Status)) &&
-            (query.DeliveryDate == null || order.DeliveryDate == query.DeliveryDate);
-
-        var orders = await unitOfWork.Orders.GetByPredicateAsync(
-            predicate, 
-            mapper.Map<PageInfo>(query), 
+        var orders = await unitOfWork.Orders.GetByPredicateAsync(order =>
+                (getOrdersByFilterQuery.Status == null || order.Status.Contains(getOrdersByFilterQuery.Status)) &&
+                (getOrdersByFilterQuery.DeliveryDate == null || order.DeliveryDate == getOrdersByFilterQuery.DeliveryDate), 
+            mapper.Map<PageInfo>(getOrdersByFilterQuery.PageInfoDto), 
             cancellationToken);
 
-        return ResultBuilder.SuccessResult(mapper.Map<IEnumerable<ReadOrderDto>>(orders));
+        var ordersReadDto = new ReadOrdersDto(mapper.Map<IEnumerable<ReadOrderDto>>(orders.Item1), orders.Item2);
+        
+        return ResultBuilder.SuccessResult(ordersReadDto);
     }
 }

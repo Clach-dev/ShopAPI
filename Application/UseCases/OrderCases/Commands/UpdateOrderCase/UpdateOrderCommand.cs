@@ -6,7 +6,7 @@ namespace Application.UseCases.OrderCases.Commands.UpdateOrderCase;
 
 public record UpdateOrderCommand(
     Guid Id,
-    double? TotalPrice,
+    decimal? TotalPrice,
     string? Status,
     DateTime? DeliveryDate,
     Guid? UserId,
