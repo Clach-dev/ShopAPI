@@ -2,8 +2,6 @@
 
 public class Order : BaseEntity
 {
-    public Guid OrderItemId { get; set; }
-    
     public Guid UserId { get; set; }
     
     public double TotalPrice { get; set; } 
