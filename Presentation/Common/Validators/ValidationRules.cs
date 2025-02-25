@@ -136,4 +136,10 @@ public static class ValidationRules
                     .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.")
             });
     }
+    
+    public static IRuleBuilder<T, Guid?> NullableGuidRule<T>(this IRuleBuilder<T, Guid?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEqual(Guid.Empty);
+    }
 }

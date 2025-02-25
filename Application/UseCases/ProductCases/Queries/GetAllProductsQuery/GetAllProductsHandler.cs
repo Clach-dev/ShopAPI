@@ -14,12 +14,12 @@ public class GetAllProductsHandler(
         GetAllProductsQuery getAllProductsQuery,
         CancellationToken cancellationToken)
     {
-        var users = await unitOfWork.Products.GetAllAsync(
+        var products = await unitOfWork.Products.GetAllAsync(
             mapper.Map<PageInfo>(getAllProductsQuery.PageInfoDto),
             cancellationToken);
 
-        var usersReadDto = new ReadProductsDto(mapper.Map<IEnumerable<ReadProductDto>>(users.Item1), users.Item2);
+        var productsReadDto = new ReadProductsDto(mapper.Map<IEnumerable<ReadProductDto>>(products.Item1), products.Item2);
         
-        return ResultBuilder.SuccessResult(usersReadDto);
+        return ResultBuilder.SuccessResult(productsReadDto);
     }
 }
