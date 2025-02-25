@@ -21,7 +21,7 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorMessages {
+    internal class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -60,6 +60,33 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category with this id not gound.
+        /// </summary>
+        internal static string CategoryIdNotFoundError {
+            get {
+                return ResourceManager.GetString("CategoryIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category is not found.
+        /// </summary>
+        internal static string CategoryNotFoundError {
+            get {
+                return ResourceManager.GetString("CategoryNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre with this name already exists.
+        /// </summary>
+        internal static string ExistingCategoryError {
+            get {
+                return ResourceManager.GetString("ExistingCategoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product with this data is already exist.
         /// </summary>
         internal static string ExistingProductError {
@@ -80,7 +107,7 @@ namespace Application.Common.Utils {
         /// <summary>
         ///   Looks up a localized string similar to Jwt settings not found.
         /// </summary>
-        public static string JwtSettingsNotFoundError {
+        internal static string JwtSettingsNotFoundError {
             get {
                 return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
             }

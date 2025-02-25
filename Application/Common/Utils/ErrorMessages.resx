@@ -39,4 +39,13 @@
     <data name="ProductIdNotFoundError" xml:space="preserve">
         <value>Product with this id is not found</value>
     </data>
+    <data name="ExistingCategoryError" xml:space="preserve">
+        <value>Genre with this name already exists</value>
+    </data>
+    <data name="CategoryNotFoundError" xml:space="preserve">
+        <value>Category is not found</value>
+    </data>
+    <data name="CategoryIdNotFoundError" xml:space="preserve">
+        <value>Category with this id not gound</value>
+    </data>
 </root>
