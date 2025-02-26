@@ -8,7 +8,8 @@ namespace Application.UseCases.UserCases.Queries.GetUserByIdCase;
 
 public class GetUserByIdHandler(
     IUnitOfWork unitOfWork,
-    IMapper mapper) : IRequestHandler<GetUserByIdQuery, Result<ReadUserDto>>
+    IMapper mapper)
+    : IRequestHandler<GetUserByIdQuery, Result<ReadUserDto>>
 {
     public async Task<Result<ReadUserDto>> Handle(
         GetUserByIdQuery getUserByIdQuery,

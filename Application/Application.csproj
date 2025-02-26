@@ -11,8 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="UseCases\CategoryCases\Commands\" />
+        feature/modules/order-module
       <Folder Include="UseCases\CategoryCases\Queries\" />
+
+      <Folder Include="UseCases\OrderCases\Commands\" />
+      <Folder Include="UseCases\OrderCases\Queries\" />
       <Folder Include="UseCases\OrderItemCases\Commands\" />
       <Folder Include="UseCases\OrderItemCases\Queries\" />
     </ItemGroup>
@@ -22,6 +25,7 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+      <EmbeddedResource Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -30,12 +34,17 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>ErrorMessages.resx</DependentUpon>
       </Compile>
+      <Compile Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="14.0.0" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
     </ItemGroup>
 
 </Project>
