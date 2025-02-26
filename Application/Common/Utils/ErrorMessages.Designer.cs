@@ -21,7 +21,7 @@ namespace Application.Common.Utils {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorMessages {
+    public class ErrorMessages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -60,7 +60,7 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category with this id not gound.
+        ///   Looks up a localized string similar to Category with this id not found.
         /// </summary>
         internal static string CategoryIdNotFoundError {
             get {
@@ -78,7 +78,7 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Genre with this name already exists.
+        ///   Looks up a localized string similar to Category with this name already exists.
         /// </summary>
         internal static string ExistingCategoryError {
             get {
@@ -107,7 +107,7 @@ namespace Application.Common.Utils {
         /// <summary>
         ///   Looks up a localized string similar to Jwt settings not found.
         /// </summary>
-        internal static string JwtSettingsNotFoundError {
+        public static string JwtSettingsNotFoundError {
             get {
                 return ResourceManager.GetString("JwtSettingsNotFoundError", resourceCulture);
             }

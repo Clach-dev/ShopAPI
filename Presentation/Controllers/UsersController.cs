@@ -36,6 +36,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllUsersQuery(pageInfoDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -52,6 +53,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetUserByIdQuery(userId), cancellationToken);
+        
         return Result(result);
     }
     
@@ -122,6 +124,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<UpdateUserRoleCommand>(updateUserRoleDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -153,6 +156,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteUserCommand(GetUserId()), cancellationToken);
+        
         return Result(result);
     }
 }
