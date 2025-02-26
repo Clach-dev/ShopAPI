@@ -18,9 +18,6 @@ public class CreateOrderDtoValidator : AbstractValidator<CreateOrderDto>
             .NullableDeliveryDateRule(); 
         
         RuleFor(x => x.UserId)
-            .GuidRule();
-
-        RuleFor(x => x.OrderItemIds)
-            .NullableGuidListRule();
+            .GuidRule(); ;
     }
 }

@@ -29,8 +29,7 @@ public class OrderMappingProfile : Profile
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate))
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-            .ForMember(dest => dest.OrderItemIds, opt => opt.MapFrom(src => src.OrderItemIds));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<UpdateOrderDto, UpdateOrderCommand>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
