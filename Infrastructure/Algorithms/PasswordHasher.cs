@@ -1,12 +1,10 @@
 using Domain.Interfaces.IAlgorithms;
-using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Text;
-using Castle.Components.DictionaryAdapter;
 
 namespace Infrastructure.Algorithms;
 
-public class PasswordHasher() : IPasswordHasher
+public class PasswordHasher : IPasswordHasher
 {
     public string HashPassword(string password)
     {
