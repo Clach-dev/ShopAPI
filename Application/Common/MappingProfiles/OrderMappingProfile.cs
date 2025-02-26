@@ -46,6 +46,7 @@ public class OrderMappingProfile : Profile
 
         CreateMap<GetOrderByFilterDto, GetOrdersByFilterQuery>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-            .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate));
+            .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate))
+            .ForMember(dest => dest.PageInfoDto, opt => opt.MapFrom(src => src.PageInfoDto));
     }
 }

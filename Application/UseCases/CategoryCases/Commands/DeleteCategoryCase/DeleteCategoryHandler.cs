@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata;
-using Application.Common.Utils;
+﻿using Application.Common.Utils;
 using Domain.Interfaces.IRepositories;
 using MediatR;
 
@@ -15,7 +14,7 @@ public class DeleteCategoryHandler(
         CancellationToken cancellationToken)
     {
         var category = await unitOfWork.Categories.GetByIdAsync(deleteCategoryCommand.Id, cancellationToken);
-        if (category == null)
+        if (category is null)
         {
             return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.CategoryNotFoundError);
         }
