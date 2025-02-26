@@ -23,13 +23,6 @@ public class PasswordHasher : IPasswordHasher
 
     public bool VerifyHashedPassword(string hashedPassword, string password)
     {
-        if (hashedPassword != HashPassword(password))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return hashedPassword == HashPassword(password);
     }
 }
