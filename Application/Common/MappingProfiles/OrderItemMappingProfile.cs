@@ -1,6 +1,5 @@
 using Application.Common.Dtos.OrderItem;
 using Application.UseCases.OrderItemCases.Commands.CreateOrderItemCase;
-using Application.UseCases.OrderItemCases.Commands.DeleteOrderItemCase;
 using Application.UseCases.OrderItemCases.Commands.UpdateOrderItemCase;
 using AutoMapper;
 using Domain.Entities;
@@ -13,6 +12,8 @@ public class OrderItemMappingProfile : Profile
     {
         CreateMap<OrderItem, ReadOrderItemDto>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))
             .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount));
         
         CreateMap<CreateOrderItemDto, CreateOrderItemCommand>()
@@ -34,11 +35,8 @@ public class OrderItemMappingProfile : Profile
         
         CreateMap<UpdateOrderItemCommand, OrderItem>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductId, opt => opt.Condition(src => src.ProductId.HasValue))
-            .ForMember(dest => dest.OrderId, opt => opt.Condition(src => src.OrderId.HasValue))
-            .ForMember(dest => dest.Amount, opt => opt.Condition(src => src.Amount.HasValue));
-        
-        CreateMap<DeleteOrderItemDto, DeleteOrderItemCommand>()
-            .ForMember(dest => dest.OrderItemId, opt => opt.MapFrom(src => src.Id));
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.OrderId))
+            .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount));
     }
 }

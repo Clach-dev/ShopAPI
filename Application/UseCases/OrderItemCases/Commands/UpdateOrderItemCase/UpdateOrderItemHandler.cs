@@ -34,7 +34,23 @@ public class UpdateOrderItemHandler(
         {
             return ResultBuilder.ConflictResult<ReadOrderItemDto>(ErrorMessages.ExistingOrderItemError);
         }
-    
+
+        if (updateOrderItemCommand.OrderId is not null)
+        {
+            if (await unitOfWork.Orders.GetByIdAsync(updateOrderItemCommand.OrderId.Value, cancellationToken) is null)
+            {
+                return ResultBuilder.NotFoundResult<ReadOrderItemDto>(ErrorMessages.OrderIdNotFoundError);
+            }
+        }
+
+        if (updateOrderItemCommand.ProductId is not null)
+        {
+            if(await unitOfWork.Products.GetByIdAsync(updateOrderItemCommand.ProductId.Value, cancellationToken) is null)
+            {
+                return ResultBuilder.NotFoundResult<ReadOrderItemDto>(ErrorMessages.ProductIdNotFound);
+            }
+        }
+        
         mapper.Map(updateOrderItemCommand, currentOrderItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     

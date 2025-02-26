@@ -4,7 +4,7 @@ using AutoMapper;
 using Domain.Interfaces.IRepositories;
 using MediatR;
 
-namespace Application.UseCases.CategoryCases.Queries.GetCategoriesByIdCase;
+namespace Application.UseCases.CategoryCases.Queries.GetCategoryByIdCase;
 
 public class GetCategoryByIdHandler(
     IUnitOfWork unitOfWork,

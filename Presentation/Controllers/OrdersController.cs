@@ -35,6 +35,7 @@ public class OrdersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllOrdersQuery(pageInfoDto), cancellationToken);
+        
         return Result(result);
     }
 
@@ -51,6 +52,7 @@ public class OrdersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<GetOrderByIdQuery>(orderId), cancellationToken);
+        
         return Result(result);
     }
 
@@ -58,7 +60,7 @@ public class OrdersController(
     /// <summary>
     /// Get orders by filter operation
     /// </summary>
-    /// <param name="getOrderByFilterDto">Dto containing filter parameters</param>
+    /// <param name="getOrderByFilterDto">Dto containing order filter parameters</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Result with filtered orders information</returns>
     [HttpGet("filter")]
@@ -68,6 +70,7 @@ public class OrdersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<GetOrdersByFilterQuery>(getOrderByFilterDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -94,28 +97,29 @@ public class OrdersController(
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with updated order information</returns>
     [HttpPut]
-    [Authorize(Policy = Policies.OnlyAdminAccess)]
+    [Authorize(Policy = Policies.AuthenticateAccess)]
     public async Task<IActionResult> UpdateOrder(
         [FromBody] UpdateOrderDto updateOrderDto,
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<UpdateOrderCommand>(updateOrderDto), cancellationToken);
+        
         return Result(result);
     }
 
     /// <summary>
     /// Delete an order operation
     /// </summary>
-    /// <param name="deleteOrderDto">DeleteOrderDto which contains id of order to delete</param>
+    /// <param name="orderId">Guid which contains id of order to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{orderId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteOrder(
-        [FromBody] DeleteOrderDto deleteOrderDto,
+        [FromRoute] Guid orderId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteOrderCommand>(deleteOrderDto), cancellationToken);
+        var result = await mediator.Send(new DeleteOrderCommand(orderId), cancellationToken);
         return Result(result);
     }
 }

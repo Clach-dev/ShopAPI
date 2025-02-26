@@ -1,5 +1,4 @@
 using Application.Common.Dtos.Order;
-using Domain.Entities;
 using FluentValidation;
 
 namespace Presentation.Common.Validators.Order;
@@ -12,12 +11,13 @@ public class CreateOrderDtoValidator : AbstractValidator<CreateOrderDto>
             .NullableTotalPriceRule();
         
         RuleFor(x => x.Status)
+            .NotEmptyRule()
             .StatusRule();
         
         RuleFor(x => x.DeliveryDate)
             .NullableDeliveryDateRule(); 
         
         RuleFor(x => x.UserId)
-            .GuidRule(); ;
+            .GuidRule();
     }
 }

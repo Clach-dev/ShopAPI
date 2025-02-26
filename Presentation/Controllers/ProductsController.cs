@@ -110,16 +110,16 @@ public class ProductsController(
     /// <summary>
     /// Delete operation of Product
     /// </summary>
-    /// <param name="deleteProductDto">updateProductDto which contains id of user you want to delete</param>
+    /// <param name="productId">Guid which contains id of product you want to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status code of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{productId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteProduct(
-        [FromBody] DeleteProductDto deleteProductDto,
+        [FromRoute] Guid productId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteProductCommand>(deleteProductDto), cancellationToken);
+        var result = await mediator.Send(new DeleteProductCommand(productId), cancellationToken);
         
         return Result(result);
     }

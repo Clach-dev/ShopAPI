@@ -16,6 +16,11 @@ public class CreateOrderHandler(
         CreateOrderCommand createOrderCommand,
         CancellationToken cancellationToken)
     {
+        var user = await unitOfWork.Users.GetByIdAsync(createOrderCommand.UserId, cancellationToken);
+        if (user == null)
+        {
+            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.UserIdNotFoundError);
+        }
         
         var newOrder = mapper.Map<Order>(createOrderCommand);
         

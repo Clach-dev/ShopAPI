@@ -1,5 +1,4 @@
 using Application.Common.Dtos.Order;
-using Application.UseCases.OrderCases.Commands.DeleteOrderCase;
 using Application.UseCases.OrderCases.Commands.CreateOrderCase;
 using Application.UseCases.OrderCases.Commands.UpdateOrderCase;
 using Application.UseCases.OrderCases.Queries.GetOrdersByFilterCase;
@@ -36,8 +35,7 @@ public class OrderMappingProfile : Profile
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.TotalPrice))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate))
-            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-            .ForMember(dest => dest.OrderItemIds, opt => opt.MapFrom(src => src.OrderItemIds));
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
         CreateMap<UpdateOrderCommand, Order>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -49,8 +47,5 @@ public class OrderMappingProfile : Profile
         CreateMap<GetOrderByFilterDto, GetOrdersByFilterQuery>()
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate));
-
-        CreateMap<DeleteOrderDto, DeleteOrderCommand>()
-            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
     }
 }

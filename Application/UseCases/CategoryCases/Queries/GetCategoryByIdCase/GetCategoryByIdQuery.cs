@@ -2,7 +2,7 @@
 using Application.Common.Utils;
 using MediatR;
 
-namespace Application.UseCases.CategoryCases.Queries.GetCategoriesByIdCase;
+namespace Application.UseCases.CategoryCases.Queries.GetCategoryByIdCase;
 
 public record GetCategoryByIdQuery(
     Guid Id)

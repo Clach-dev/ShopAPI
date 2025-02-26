@@ -9,6 +9,6 @@
 /// <param name="DeliveryDate">DateTime that contains DeliveryDate of Order</param>
 public record ReadOrderDto(
     Guid Id,
-    decimal TotalPrice,
+    decimal? TotalPrice,
     string Status,
-    DateTime DeliveryDate);
+    DateTime? DeliveryDate);

@@ -16,29 +16,22 @@ public class UpdateOrderHandler(
         UpdateOrderCommand updateOrderCommand,
         CancellationToken cancellationToken)
     {
-        if (updateOrderCommand.OrderItemIds == null) 
-        {
-            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderItemIdNotFoundError);
-        }
-        
         var currentOrder = await unitOfWork.Orders.GetByIdAsync(updateOrderCommand.Id, cancellationToken);
         if (currentOrder is null)
         {
-            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderIdNotFound);
+            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderIdNotFoundError);
         }
-        
-        var orderItems = (await unitOfWork.OrderItems.GetByPredicateAsync(orderItem =>
-                updateOrderCommand.OrderItemIds.Contains(orderItem.Id),
-            new PageInfo(),
-            cancellationToken)).Item1
-            .ToList();
-        if (orderItems.Count() != updateOrderCommand.OrderItemIds.Count())
+
+        if (updateOrderCommand.UserId != null)
         {
-            return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.ProductIdNotFound);
+            var user = await unitOfWork.Users.GetByIdAsync(updateOrderCommand.UserId.Value, cancellationToken);
+            if (user == null)
+            {
+                return ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.UserIdNotFoundError);
+            }
         }
         
         mapper.Map(updateOrderCommand, currentOrder);
-        currentOrder.OrderItems = orderItems;
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
         var orderReadDto = mapper.Map<ReadOrderDto>(currentOrder);
