@@ -36,6 +36,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllUsersQuery(pageInfoDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -52,6 +53,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetUserByIdQuery(userId), cancellationToken);
+        
         return Result(result);
     }
     
@@ -122,22 +124,23 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<UpdateUserRoleCommand>(updateUserRoleDto), cancellationToken);
+        
         return Result(result);
     }
     
     /// <summary>
     /// Delete operation of user
     /// </summary>
-    /// <param name="deleteUserDto">DeleteUserDto which contains id of user you want to delete</param>
+    /// <param name="userId">Guid which contains id of user you want to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status code of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{userId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteUser(
-        [FromBody] DeleteUserDto deleteUserDto,
+        [FromRoute] Guid userId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteUserCommand>(deleteUserDto), cancellationToken);
+        var result = await mediator.Send(new DeleteUserCommand(userId), cancellationToken);
         
         return Result(result);
     }
@@ -153,6 +156,7 @@ public class UsersController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new DeleteUserCommand(GetUserId()), cancellationToken);
+        
         return Result(result);
     }
 }

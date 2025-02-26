@@ -27,6 +27,29 @@ public static class ValidationRules
             .NotEqual(Guid.Empty);
     }
     
+    public static IRuleBuilder<T, Guid?> NullableGuidRule<T>(this IRuleBuilder<T, Guid?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEqual(Guid.Empty);
+    }
+    
+    public static IRuleBuilder<T, string?> PhoneNumberRule<T>(this IRuleBuilder<T, string?> ruleBuilder)
+    {
+        return ruleBuilder
+            .Matches(@"^\+?[0-9]{10,15}$").WithMessage("Phone number must have from 10 to 15 numbers and can starts with '+'.");
+    }
+    
+    public static IRuleBuilder<T, string> PasswordRule<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEmpty().WithMessage("The Password of birth is required.")
+            .MinimumLength(8).WithMessage("Password must have at least 8 symbols.")
+            .Matches("[A-Z]").WithMessage("Password must have at least one upper case latter.")
+            .Matches("[a-z]").WithMessage("Password must have at least one lower case latter.")
+            .Matches("[0-9]").WithMessage("Password must have at least one number.")
+            .Matches("[^a-zA-Z0-9]").WithMessage("Password must have at least one special symbol.");
+    }
+
     public static IRuleBuilder<T, string> LastNameRule<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         return ruleBuilder
@@ -54,24 +77,6 @@ public static class ValidationRules
             .LessThan(DateTime.Now).WithMessage("The date of birth must be in the past.");
     }
 
-    public static IRuleBuilder<T, string> PhoneNumberRule<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder
-            .NotEmpty().WithMessage("The PhoneNumber of birth is required.")
-            .Matches(@"^\+?[0-9]{10,15}$").WithMessage("Phone number must have from 10 to 15 numbers and can starts with '+'.");
-    }
-    
-    public static IRuleBuilder<T, string> PasswordRule<T>(this IRuleBuilder<T, string> ruleBuilder)
-    {
-        return ruleBuilder
-            .NotEmpty().WithMessage("The Password of birth is required.")
-            .MinimumLength(8).WithMessage("Password must have at least 8 symbols.")
-            .Matches("[A-Z]").WithMessage("Password must have at least one upper case latter.")
-            .Matches("[a-z]").WithMessage("Password must have at least one lower case latter.")
-            .Matches("[0-9]").WithMessage("Password must have at least one number.")
-            .Matches("[^a-zA-Z0-9]").WithMessage("Password must have at least one special symbol.");
-    }
-    
     public static IRuleBuilder<T, string?> EmailRule<T>(this IRuleBuilder<T, string?> ruleBuilder)
     {
         return ruleBuilder
@@ -97,43 +102,59 @@ public static class ValidationRules
             MaximumLength(300).WithMessage("The description must not exceed 300 characters.");
     }
     
-    public static IRuleBuilder<T, double> PriceRule<T>(this IRuleBuilder<T, double> ruleBuilder)
+    public static IRuleBuilder<T, decimal> PriceRule<T>(this IRuleBuilder<T, decimal> ruleBuilder)
     {
         return ruleBuilder
-            .GreaterThan(0).WithMessage("Price must be greater than zero.")
-            .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
-            .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
-            .WithMessage("Price must have up to 2 decimal places.");
+            .NotEmpty().WithMessage("Price is required.")
+            .GreaterThan(0m).WithMessage("Price must be greater than zero.")
+            .LessThanOrEqualTo(1_000_000m).WithMessage("Price must not exceed 1,000,000.");
     }
 
-    public static IRuleBuilder<T, double?> PriceRule<T>(this IRuleBuilder<T, double?> ruleBuilder)
+    public static IRuleBuilder<T, decimal?> NullablePriceRule<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
     {
         return ruleBuilder
-            .NotNull().WithMessage("Price is required.")
-            .SetValidator(new InlineValidator<double?>()
-            {
-                v => v.RuleFor(x => x!.Value)
-                    .GreaterThan(0).WithMessage("Price must be greater than zero.")
-                    .LessThanOrEqualTo(1_000_000).WithMessage("Price must not exceed 1,000,000.")
-                    .Must(price => Math.Abs(price * 100 - Math.Round(price * 100)) < 1e-10)
-                    .WithMessage("Price must have up to 2 decimal places.")
-            });
+            .GreaterThan(0m).WithMessage("Price must be greater than zero.")
+            .LessThanOrEqualTo(1_000_000m).WithMessage("Price must not exceed 1,000,000.");
     }
 
     public static IRuleBuilder<T, int> AmountRule<T>(this IRuleBuilder<T, int> ruleBuilder)
     {
         return ruleBuilder
+            .NotEmpty().WithMessage("Amount is required.")
             .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.");
     }
 
-    public static IRuleBuilder<T, int?> AmountRule<T>(this IRuleBuilder<T, int?> ruleBuilder)
+    public static IRuleBuilder<T, int?> NullableAmountRule<T>(this IRuleBuilder<T, int?> ruleBuilder)
     {
         return ruleBuilder
-            .NotNull().WithMessage("Amount is required.")
             .SetValidator(new InlineValidator<int?>()
             {
                 v => v.RuleFor(x => x!.Value)
                     .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.")
             });
+    }
+
+    public static IRuleBuilder<T, string> StatusRule<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder
+            .Matches("^[A-Z][a-z]{1,19}$").WithMessage("Status must start with an uppercase letter, " +
+                                                       "contain only English letters, and be between " +
+                                                       "2 and 20 characters long.");
+    } 
+    
+    public static IRuleBuilder<T, decimal?> NullableTotalPriceRule<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThan(0).WithMessage("Total price must be greater than 0.")
+            .LessThanOrEqualTo(1_000_000).WithMessage("Total price must not exceed 1,000,000.");
+    } 
+    
+    public static IRuleBuilder<T, DateTime?> NullableDeliveryDateRule<T>(this IRuleBuilder<T, DateTime?> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThanOrEqualTo(DateTime.UtcNow.AddDays(1))
+            .WithMessage("Delivery date must be in future")
+            .LessThanOrEqualTo(DateTime.UtcNow.AddMonths(3))
+            .WithMessage("Delivery date cannot be more than 2 month from today.");
     }
 }

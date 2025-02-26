@@ -5,12 +5,12 @@
 /// </summary>
 /// <param name="Name">string that contains Name of Product</param>
 /// <param name="Description">string that contains Description of Product</param>
-/// <param name="Price">double that contains Price of Product</param>
+/// <param name="Price">decimal that contains Price of Product</param>
 /// <param name="Amount">int that contains Amount of Product</param>
+/// <param name="CategoryIds">IEnumerable_Guid that contains identifiers of Categories</param>
 public record CreateProductDto(
     string Name,
     string? Description,
-    double Price,
+    decimal Price,
     int Amount,
-    IEnumerable<Guid>? CategoryIds,
-    IEnumerable<Guid>? OrderItemIds);
+    IEnumerable<Guid>? CategoryIds);

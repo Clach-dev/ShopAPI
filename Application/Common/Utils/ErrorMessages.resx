@@ -33,10 +33,31 @@
     <data name="WrongPasswordError" xml:space="preserve">
         <value>User password is wrong</value>
     </data>
+    <data name="ProductIdNotFound" xml:space="preserve">
+        <value>Product with this Id not found</value>
+    </data>
+    <data name="OrderItemIdNotFoundError" xml:space="preserve">
+        <value>Item with this Id not found</value>
+    </data>
+    <data name="OrderIdNotFoundError" xml:space="preserve">
+        <value>Order with this Id not found</value>
+    </data>
     <data name="ExistingProductError" xml:space="preserve">
         <value>Product with this data is already exist</value>
     </data>
     <data name="ProductIdNotFoundError" xml:space="preserve">
         <value>Product with this id is not found</value>
+    </data>
+    <data name="ExistingCategoryError" xml:space="preserve">
+        <value>Category with this name already exists</value>
+    </data>
+    <data name="CategoryNotFoundError" xml:space="preserve">
+        <value>Category is not found</value>
+    </data>
+    <data name="CategoryIdNotFoundError" xml:space="preserve">
+        <value>Category with this id not found</value>
+    </data>
+    <data name="CategoryConflictError" xml:space="preserve">
+        <value>There are dublicate of catetegory or wrong category Id</value>
     </data>
 </root>

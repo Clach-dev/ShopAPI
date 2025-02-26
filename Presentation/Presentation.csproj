@@ -14,6 +14,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
@@ -24,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Common\Validators\OrderItem\" />
       <Folder Include="Common\Validators\Category\" />
       <Folder Include="Common\Validators\OrderItem\" />
       <Folder Include="Common\Validators\Order\" />

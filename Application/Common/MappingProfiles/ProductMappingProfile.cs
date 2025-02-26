@@ -1,6 +1,5 @@
 ﻿using Application.Common.Dtos.Product;
 using Application.UseCases.ProductCases.Commands.CreateProductCase;
-using Application.UseCases.ProductCases.Commands.DeleteProductCase;
 using Application.UseCases.ProductCases.Commands.UpdateProductCase;
 using Application.UseCases.ProductCases.Queries.GetProductsByFilterQuery;
 using AutoMapper;
@@ -16,7 +15,8 @@ public class ProductMappingProfile : Profile
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
-            .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount));
+            .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount))
+            .ForMember(dest => dest.CategoryIds, opt => opt.MapFrom(src => src.CategoryIds));
         
         CreateMap<CreateProductCommand, Product>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
@@ -32,16 +32,12 @@ public class ProductMappingProfile : Profile
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount));
         
-        CreateMap<DeleteProductDto, DeleteProductCommand>()
-            .ConstructUsing(src => new DeleteProductCommand(src.ProductId));
-        
         CreateMap<UpdateProductDto, UpdateProductCommand>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount))
-            .ForMember(dest => dest.OrderItemIds, opt => opt.MapFrom(src => src.OrderItemIds))
             .ForMember(dest => dest.CategoryIds, opt => opt.MapFrom(src => src.CategoryIds));
         
         CreateMap<UpdateProductCommand, Product>()
@@ -50,8 +46,7 @@ public class ProductMappingProfile : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
             .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Amount))
-            .ForMember(dest => dest.Categories, opt => opt.Ignore())
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore());
+            .ForMember(dest => dest.Categories, opt => opt.Ignore());
 
         CreateMap<GetProductsByFilterDto, GetProductsByFilterQuery>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))

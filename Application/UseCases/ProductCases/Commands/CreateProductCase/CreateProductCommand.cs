@@ -7,8 +7,7 @@ namespace Application.UseCases.ProductCases.Commands.CreateProductCase;
 public record CreateProductCommand(
     string Name,
     string? Description,
-    double Price,
+    decimal Price,
     int Amount,
-    IEnumerable<Guid>? CategoryIds,
-    IEnumerable<Guid>? OrderItemIds)
+    IEnumerable<Guid>? CategoryIds)
     : IRequest<Result<ReadProductDto>>;

@@ -35,6 +35,7 @@ public class ProductsController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllProductsQuery(pageInfoDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -51,6 +52,7 @@ public class ProductsController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetProductByIdQuery(productId), cancellationToken);
+        
         return Result(result);
     }
     
@@ -67,6 +69,7 @@ public class ProductsController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(mapper.Map<GetProductsByFilterQuery>(getProductsByFilterDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -90,7 +93,7 @@ public class ProductsController(
     /// <summary>
     /// Product update operation
     /// </summary>
-    /// <param name="updateProductDto">updateProductDto which contains new information of existed user</param>
+    /// <param name="updateProductDto">updateProductDto which contains new information of existed product</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with updated product information</returns>
     [HttpPut]
@@ -99,9 +102,7 @@ public class ProductsController(
         [FromBody] UpdateProductDto updateProductDto,
         CancellationToken cancellationToken)
     {
-        var updateProductCommand = mapper.Map<UpdateProductCommand>(updateProductDto);
-        
-        var result = await mediator.Send(updateProductCommand, cancellationToken);
+        var result = await mediator.Send(mapper.Map<UpdateProductCommand>(updateProductDto), cancellationToken);
         
         return Result(result);
     }
@@ -109,16 +110,16 @@ public class ProductsController(
     /// <summary>
     /// Delete operation of Product
     /// </summary>
-    /// <param name="deleteProductDto">updateProductDto which contains id of user you want to delete</param>
+    /// <param name="productId">Guid which contains id of product you want to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status code of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{productId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteProduct(
-        [FromBody] DeleteProductDto deleteProductDto,
+        [FromRoute] Guid productId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteProductCommand>(deleteProductDto), cancellationToken);
+        var result = await mediator.Send(new DeleteProductCommand(productId), cancellationToken);
         
         return Result(result);
     }
