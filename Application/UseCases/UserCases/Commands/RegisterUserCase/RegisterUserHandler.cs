@@ -20,7 +20,9 @@ public class RegisterUserHandler(
     {
         var existingUser = (await unitOfWork
                 .Users
-                .GetByPredicateAsync(user => user.PhoneNumber == registerUserCommand.PhoneNumber, new PageInfo() , cancellationToken))
+                .GetByPredicateAsync(user => user.PhoneNumber == registerUserCommand.PhoneNumber,
+                    new PageInfo(),
+                    cancellationToken)).Item1
             .FirstOrDefault();
         if (existingUser is not null)
         {

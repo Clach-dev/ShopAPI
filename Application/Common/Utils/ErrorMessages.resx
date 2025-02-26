@@ -33,4 +33,10 @@
     <data name="WrongPasswordError" xml:space="preserve">
         <value>User password is wrong</value>
     </data>
+    <data name="ExistingProductError" xml:space="preserve">
+        <value>Product with this data is already exist</value>
+    </data>
+    <data name="ProductIdNotFoundError" xml:space="preserve">
+        <value>Product with this id is not found</value>
+    </data>
 </root>
