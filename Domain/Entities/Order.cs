@@ -4,7 +4,7 @@ public class Order : BaseEntity
 {
     public Guid UserId { get; set; }
     
-    public double? TotalPrice { get; set; } 
+    public decimal? TotalPrice { get; set; } 
     
     public string Status { get; set; } = String.Empty;
     
