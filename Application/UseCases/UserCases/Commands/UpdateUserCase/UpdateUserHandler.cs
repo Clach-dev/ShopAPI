@@ -24,7 +24,9 @@ public class UpdateUserHandler(
         
         var existedUser = (await unitOfWork
                 .Users
-                .GetByPredicateAsync(user => user.PhoneNumber == updateUserCommand.PhoneNumber, new PageInfo(), cancellationToken))
+                .GetByPredicateAsync(user => user.PhoneNumber == updateUserCommand.PhoneNumber,
+                    new PageInfo(),
+                    cancellationToken)).Item1
             .FirstOrDefault();
         if (existedUser is not null && existedUser.Id != currentUser.Id)
         {

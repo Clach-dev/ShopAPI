@@ -8,7 +8,7 @@ public class DeleteUserHandler(
     IUnitOfWork unitOfWork)
     : IRequestHandler<DeleteUserCommand, Result<byte?>>
 {
-    public async Task<Result<byte?>> Handle(
+    public async Task<Result<byte?>> Handle(    
         DeleteUserCommand deleteUserCommand,
         CancellationToken cancellationToken)
     {

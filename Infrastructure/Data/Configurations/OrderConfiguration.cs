@@ -13,7 +13,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         
         builder
             .Property(order => order.TotalPrice)
-            .IsRequired(true);
+            .IsRequired(false);
 
         builder
             .Property(order => order.Status)
@@ -21,7 +21,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         builder
             .Property(order => order.DeliveryDate)
-            .IsRequired(true);
+            .IsRequired(false);
 
         builder
             .HasOne(order => order.User)

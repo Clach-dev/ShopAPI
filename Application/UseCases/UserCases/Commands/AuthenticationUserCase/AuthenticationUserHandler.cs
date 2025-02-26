@@ -19,7 +19,10 @@ public class AuthenticationUserHandler(
     {
         var user = (await unitOfWork
                 .Users
-                .GetByPredicateAsync(user => user.PhoneNumber == authenticationUserCommand.PhoneNumber, new PageInfo(), cancellationToken))
+                .GetByPredicateAsync(user => 
+                    user.PhoneNumber == authenticationUserCommand.PhoneNumber,
+                    new PageInfo(),
+                    cancellationToken)).Item1
             .FirstOrDefault();
         if (user is null)
         {
