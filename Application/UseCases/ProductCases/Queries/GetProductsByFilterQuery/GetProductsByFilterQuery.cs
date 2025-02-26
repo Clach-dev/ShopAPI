@@ -7,8 +7,8 @@ namespace Application.UseCases.ProductCases.Queries.GetProductsByFilterQuery;
 
 public record GetProductsByFilterQuery(
 string? Name,
-double? MinPrice,
-double? MaxPrice,
+decimal? MinPrice,
+decimal? MaxPrice,
 IEnumerable<Guid> CategoryIds,
 PageInfoDto PageInfoDto) 
 : IRequest<Result<ReadProductsDto>>;

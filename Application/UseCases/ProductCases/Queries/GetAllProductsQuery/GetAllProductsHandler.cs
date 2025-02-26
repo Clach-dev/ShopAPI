@@ -3,12 +3,14 @@ using Application.Common.Utils;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.IRepositories;
+using MediatR;
 
 namespace Application.UseCases.ProductCases.Queries.GetAllProductsQuery;
 
 public class GetAllProductsHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper)
+    : IRequestHandler<GetAllProductsQuery, Result<ReadProductsDto>>
 {
     public async Task<Result<ReadProductsDto>> Handle(
         GetAllProductsQuery getAllProductsQuery,
