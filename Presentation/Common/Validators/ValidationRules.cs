@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using System.Globalization;
+using Domain.Enums;
 using FluentValidation;
 
 namespace Presentation.Common.Validators;
@@ -81,6 +82,7 @@ public static class ValidationRules
     public static IRuleBuilder<T, Roles> RoleRule<T>(this IRuleBuilder<T, Roles> ruleBuilder)
     {
         return ruleBuilder
+            .NotEmpty().WithMessage("The role is required")
             .Must(role => Enum.IsDefined(typeof(Roles), role))
             .WithMessage("Role must be a valid value.");
     }
@@ -135,5 +137,68 @@ public static class ValidationRules
                 v => v.RuleFor(x => x!.Value)
                     .GreaterThanOrEqualTo(0).WithMessage("Amount cannot be negative.")
             });
+    }
+
+    public static IRuleBuilder<T, string> StatusRule<T>(this IRuleBuilder<T, string> ruleBuilder)
+    {
+        return ruleBuilder
+            .Matches("^[A-Z][a-z]{1,19}$").WithMessage("Status must start with an uppercase letter, " +
+                                                       "contain only English letters, and be between " +
+                                                       "2 and 20 characters long.");
+    } 
+    
+    public static IRuleBuilder<T, decimal> TotalPriceRule<T>(this IRuleBuilder<T, decimal> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThan(0).WithMessage("Total price must be greater than 0.")
+            .Must(x => x.ToString(CultureInfo.InvariantCulture).Contains("."))
+            .WithMessage("Total price must contain a decimal part.");
+    }
+    
+    public static IRuleBuilder<T, decimal?> NullableTotalPriceRule<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThan(0).WithMessage("Total price must be greater than 0.")
+            .Must(x => x == null || x.ToString()!.Contains("."))
+            .WithMessage("Total price must contain a decimal part.");
+    } 
+    
+    public static IRuleBuilder<T, DateTime> DeliveryDateRule<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThanOrEqualTo(DateTime.UtcNow.AddDays(14))
+            .WithMessage("Delivery date must be at least 2 weeks from today.")
+            .LessThanOrEqualTo(DateTime.UtcNow.AddMonths(1))
+            .WithMessage("Delivery date cannot be more than 1 month from today.");
+    }
+    
+    public static IRuleBuilder<T, DateTime?> NullableDeliveryDateRule<T>(this IRuleBuilder<T, DateTime?> ruleBuilder)
+    {
+        return ruleBuilder
+            .GreaterThanOrEqualTo(DateTime.UtcNow.AddDays(14))
+            .WithMessage("Delivery date must be at least 2 weeks from today.")
+            .LessThanOrEqualTo(DateTime.UtcNow.AddMonths(1))
+            .WithMessage("Delivery date cannot be more than 1 month from today.");
+    }
+    
+    public static IRuleBuilder<T, Guid?> NullableGuidRule<T>(this IRuleBuilder<T, Guid?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEqual(Guid.Empty);
+    }
+    
+    public static IRuleBuilder<T, IEnumerable<Guid>> GuidListRule<T>(this IRuleBuilder<T, IEnumerable<Guid>> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEmpty().WithMessage("OrderItemIds must not be empty.")
+            .Must(list => list.All(id => id != Guid.Empty))
+            .WithMessage("OrderItemIds must not contain empty GUIDs.");
+    }
+    
+    public static IRuleBuilder<T, IEnumerable<Guid>?> NullableGuidListRule<T>(this IRuleBuilder<T, IEnumerable<Guid>?> ruleBuilder)
+    {
+        return ruleBuilder
+            .Must(list => list != null && list.All(id => id != Guid.Empty))
+            .WithMessage("OrderItemIds must not contain empty GUIDs.");
     }
 }

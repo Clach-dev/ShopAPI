@@ -13,6 +13,8 @@
     <ItemGroup>
       <Folder Include="UseCases\OrderCases\Commands\" />
       <Folder Include="UseCases\OrderCases\Queries\" />
+      <Folder Include="UseCases\CategoryCases\Commands\" />
+      <Folder Include="UseCases\CategoryCases\Queries\" />
       <Folder Include="UseCases\OrderItemCases\Commands\" />
       <Folder Include="UseCases\OrderItemCases\Queries\" />
     </ItemGroup>
@@ -42,6 +44,12 @@
 
     <ItemGroup>
       <None Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
+      <Folder Include="UseCases\CategoryCases\Commands\" />
+      <Folder Include="UseCases\CategoryCases\Queries\" />
+      <Folder Include="UseCases\OrderCases\Commands\" />
+      <Folder Include="UseCases\OrderCases\Queries\" />
+      <EmbeddedResource Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
+      <Compile Remove="UseCases\CategoryCases\Queries\GetCategoriesByName\**" />
     </ItemGroup>
 
 </Project>
