@@ -150,15 +150,6 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item with this Id not found.
-        /// </summary>
-        internal static string OrderItemIdNotFoundError {
-            get {
-                return ResourceManager.GetString("OrderItemIdNotFoundError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Product with this Id not found.
         /// </summary>
         internal static string ProductIdNotFound {
