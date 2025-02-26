@@ -13,6 +13,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         
         builder
             .Property(order => order.TotalPrice)
+            .HasColumnType("decimal(18,2)")
             .IsRequired(false);
 
         builder

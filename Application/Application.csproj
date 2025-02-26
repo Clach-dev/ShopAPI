@@ -11,6 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        feature/modules/order-module
+      <Folder Include="UseCases\CategoryCases\Queries\" />
+
       <Folder Include="UseCases\OrderCases\Commands\" />
       <Folder Include="UseCases\OrderCases\Queries\" />
       <Folder Include="UseCases\OrderItemCases\Commands\" />
