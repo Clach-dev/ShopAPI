@@ -44,7 +44,7 @@ public class OrderItemsController(
     /// <param name="orderItemId">Guid identifier of orderItem</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with orderItems information</returns>
-    [HttpGet("{productId:guid}")]
+    [HttpGet("{orderItemId:guid}")]
     [AllowAnonymous]
     public async Task<IActionResult> GetOrderItemById(
         [FromRoute] Guid orderItemId,
@@ -57,7 +57,7 @@ public class OrderItemsController(
     /// <summary>
     /// Creation of new orderItem
     /// </summary>
-    /// <param name="createOrderItemDto">createOrderItemDto which contains new product information</param>
+    /// <param name="createOrderItemDto">createOrderItemDto which contains new orderItem information</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with created orderItem information</returns>
     [HttpPost]
@@ -74,7 +74,7 @@ public class OrderItemsController(
     /// <summary>
     /// OrderItem update operation
     /// </summary>
-    /// <param name="updateOrderItemDto">updateOrderItemDto which contains new information of existed user</param>
+    /// <param name="updateOrderItemDto">updateOrderItemDto which contains new information of existed orderItem</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with updated OrderItem information</returns>
     [HttpPut]
