@@ -96,6 +96,15 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OrderItem with this data is already exist.
+        /// </summary>
+        internal static string ExistingOrderItemError {
+            get {
+                return ResourceManager.GetString("ExistingOrderItemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User with this phone number is already exists.
         /// </summary>
         internal static string ExistingUserPhoneNumberError {
@@ -155,6 +164,15 @@ namespace Application.Common.Utils {
         internal static string UserIdNotFoundError {
             get {
                 return ResourceManager.GetString("UserIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OrderItem with this id is not found.
+        /// </summary>
+        internal static string OrderItemIdNotFoundError {
+            get {
+                return ResourceManager.GetString("OrderItemIdNotFoundError", resourceCulture);
             }
         }
         

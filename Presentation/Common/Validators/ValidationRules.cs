@@ -181,12 +181,6 @@ public static class ValidationRules
             .WithMessage("Delivery date cannot be more than 1 month from today.");
     }
     
-    public static IRuleBuilder<T, Guid?> NullableGuidRule<T>(this IRuleBuilder<T, Guid?> ruleBuilder)
-    {
-        return ruleBuilder
-            .NotEqual(Guid.Empty);
-    }
-    
     public static IRuleBuilder<T, IEnumerable<Guid>> GuidListRule<T>(this IRuleBuilder<T, IEnumerable<Guid>> ruleBuilder)
     {
         return ruleBuilder
@@ -200,5 +194,11 @@ public static class ValidationRules
         return ruleBuilder
             .Must(list => list != null && list.All(id => id != Guid.Empty))
             .WithMessage("OrderItemIds must not contain empty GUIDs.");
+    }
+    
+    public static IRuleBuilder<T, Guid?> NullableGuidRule<T>(this IRuleBuilder<T, Guid?> ruleBuilder)
+    {
+        return ruleBuilder
+            .NotEqual(Guid.Empty);
     }
 }
