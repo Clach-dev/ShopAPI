@@ -15,7 +15,7 @@ public class DeleteOrderItemHandler(
         var orderItem = await unitOfWork.OrderItems.GetByIdAsync(deleteOrderItemCommand.OrderItemId, cancellationToken);
         if (orderItem is null)
         {
-            return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.OrderItemIdNotFoundError);
+            return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.OrderItemDataNotFoundError);
         }
         
         await unitOfWork.OrderItems.Delete(orderItem);
