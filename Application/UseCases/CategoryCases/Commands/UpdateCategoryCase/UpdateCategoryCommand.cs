@@ -6,6 +6,6 @@ namespace Application.UseCases.CategoryCases.Commands.UpdateCategoryCase;
 
 public record UpdateCategoryCommand(
     Guid Id,
-    string Name,
-    string Description)
+    string? Name,
+    string? Description)
     : IRequest<Result<ReadCategoryDto>>;

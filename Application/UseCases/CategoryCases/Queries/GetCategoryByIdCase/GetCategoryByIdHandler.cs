@@ -6,16 +6,16 @@ using MediatR;
 
 namespace Application.UseCases.CategoryCases.Queries.GetCategoriesByIdCase;
 
-public class GetCategoriesByIdHandler(
+public class GetCategoryByIdHandler(
     IUnitOfWork unitOfWork,
     IMapper mapper)
-    : IRequestHandler<GetCategoriesByIdQuery, Result<ReadCategoryDto>>
+    : IRequestHandler<GetCategoryByIdQuery, Result<ReadCategoryDto>>
 {
     public async Task<Result<ReadCategoryDto>> Handle(
-        GetCategoriesByIdQuery getCategoriesByIdQuery,
+        GetCategoryByIdQuery getCategoryByIdQuery,
         CancellationToken cancellationToken)
     {
-        var categories = await unitOfWork.Categories.GetByIdAsync(getCategoriesByIdQuery.Id, cancellationToken);
+        var categories = await unitOfWork.Categories.GetByIdAsync(getCategoryByIdQuery.Id, cancellationToken);
         if (categories == null)
         {
             ResultBuilder.NotFoundResult<ReadCategoryDto>(ErrorMessages.CategoryIdNotFoundError);

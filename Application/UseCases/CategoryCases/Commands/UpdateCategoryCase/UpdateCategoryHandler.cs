@@ -26,7 +26,7 @@ public class UpdateCategoryHandler(
                 .Categories
                 .GetByPredicateAsync(category => category.Name == updateCategoryCommand.Name, new PageInfo(), cancellationToken)).Item1
             .FirstOrDefault();
-        if (category is null)
+        if (category is not null)
         {
             return ResultBuilder.ConflictResult<ReadCategoryDto>(ErrorMessages.ExistingCategoryError);
         }

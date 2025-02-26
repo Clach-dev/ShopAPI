@@ -8,7 +8,6 @@ using MediatR;
 namespace Application.UseCases.CategoryCases.Commands.CreateCategoryCase;
 
 public class CreateCategoryHandler(
-
     IUnitOfWork unitOfWork,
     IMapper mapper)
     : IRequestHandler<CreateCategoryCommand, Result<ReadCategoryDto>>
@@ -17,9 +16,10 @@ public class CreateCategoryHandler(
         CreateCategoryCommand createCategoryCommand,
         CancellationToken cancellationToken)
     {
-        var existingCategory = (await unitOfWork
-            .Categories
-            .GetByPredicateAsync(category => category.Name == createCategoryCommand.Name, new PageInfo(), cancellationToken)).Item1
+        var existingCategory = (await unitOfWork.Categories
+            .GetByPredicateAsync(category => category.Name == createCategoryCommand.Name,
+                new PageInfo(),
+                cancellationToken)).Item1
             .FirstOrDefault();
         if (existingCategory is not null)
         {

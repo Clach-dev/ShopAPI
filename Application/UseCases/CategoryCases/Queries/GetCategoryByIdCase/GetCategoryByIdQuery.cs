@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Application.UseCases.CategoryCases.Queries.GetCategoriesByIdCase;
 
-public record GetCategoriesByIdQuery(
+public record GetCategoryByIdQuery(
     Guid Id)
     : IRequest<Result<ReadCategoryDto>>;
