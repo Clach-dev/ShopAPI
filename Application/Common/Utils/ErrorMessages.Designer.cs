@@ -60,6 +60,33 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category with this id not found.
+        /// </summary>
+        internal static string CategoryIdNotFoundError {
+            get {
+                return ResourceManager.GetString("CategoryIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category is not found.
+        /// </summary>
+        internal static string CategoryNotFoundError {
+            get {
+                return ResourceManager.GetString("CategoryNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category with this name already exists.
+        /// </summary>
+        internal static string ExistingCategoryError {
+            get {
+                return ResourceManager.GetString("ExistingCategoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product with this data is already exist.
         /// </summary>
         internal static string ExistingProductError {

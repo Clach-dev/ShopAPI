@@ -25,7 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Validators\Category\" />
       <Folder Include="Common\Validators\OrderItem\" />
       <Folder Include="Common\Validators\Order\" />
     </ItemGroup>
