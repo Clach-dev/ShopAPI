@@ -16,8 +16,6 @@
 
       <Folder Include="UseCases\OrderCases\Commands\" />
       <Folder Include="UseCases\OrderCases\Queries\" />
-      <Folder Include="UseCases\OrderItemCases\Commands\" />
-      <Folder Include="UseCases\OrderItemCases\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
