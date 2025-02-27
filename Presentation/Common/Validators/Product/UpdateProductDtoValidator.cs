@@ -7,6 +7,9 @@ public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
 {
     public UpdateProductDtoValidator()
     {
+        RuleFor(x => x.Id)
+            .GuidRule();
+        
         RuleFor(x => x.Name)!
             .TitleRule();
 
@@ -14,9 +17,9 @@ public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
             .DescriptionRule();
 
         RuleFor(x => x.Price)
-            .PriceRule();
+            .NullablePriceRule();
 
         RuleFor(x => x.Amount)
-            .AmountRule();
+            .NullableAmountRule();
     }
 }

@@ -8,7 +8,6 @@ public class CreateCategoryDtoValidator : AbstractValidator<CreateCategoryDto>
     public CreateCategoryDtoValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty()
             .TitleRule();
         
         RuleFor(x => x.Description)!

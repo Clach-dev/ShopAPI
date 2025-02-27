@@ -18,7 +18,7 @@ public class GetOrderByIdHandler(
         var order = await unitOfWork.Orders.GetByIdAsync(getOrderByIdQuery.Id, cancellationToken);
         if (order is null)
         {
-            ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderIdNotFound);
+            ResultBuilder.NotFoundResult<ReadOrderDto>(ErrorMessages.OrderIdNotFoundError);
         }
         
         var orderReadDto = mapper.Map<ReadOrderDto>(order);

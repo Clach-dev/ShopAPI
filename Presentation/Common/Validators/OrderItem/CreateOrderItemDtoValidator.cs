@@ -14,7 +14,6 @@ public class CreateOrderItemDtoValidator : AbstractValidator<CreateOrderItemDto>
             .GuidRule();
         
         RuleFor(x => x.Amount)
-            .NotNull().WithMessage("Amount is required.")
             .AmountRule();
     }
 }

@@ -4,7 +4,7 @@ using Application.UseCases.CategoryCases.Commands.CreateCategoryCase;
 using Application.UseCases.CategoryCases.Commands.DeleteCategoryCase;
 using Application.UseCases.CategoryCases.Commands.UpdateCategoryCase;
 using Application.UseCases.CategoryCases.Queries.GetAllCategoriesCase;
-using Application.UseCases.CategoryCases.Queries.GetCategoriesByIdCase;
+using Application.UseCases.CategoryCases.Queries.GetCategoryByIdCase;
 using AutoMapper;
 using Domain.Constants;
 using MediatR;
@@ -39,7 +39,7 @@ public class CategoriesController(
     }
     
     /// <summary>
-    /// Get categories by id operation
+    /// Get category by id operation
     /// </summary>
     /// <param name="categoryId">Guid identifier of category</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
@@ -92,16 +92,16 @@ public class CategoriesController(
     /// <summary>
     /// Delete operation of Category
     /// </summary>
-    /// <param name="deleteCategoryDto">updateCategoryDto which contains id of category you want to delete</param>
+    /// <param name="categoryId">Guid which contains id of category you want to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status code of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{categoryId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteCategory(
-        [FromBody] DeleteCategoryDto deleteCategoryDto,
+        [FromRoute] Guid categoryId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteCategoryCommand>(deleteCategoryDto), cancellationToken);
+        var result = await mediator.Send(new DeleteCategoryCommand(categoryId), cancellationToken);
         
         return Result(result);
     }

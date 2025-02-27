@@ -35,6 +35,7 @@ public class OrderItemsController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetAllOrderItemsQuery(pageInfoDto), cancellationToken);
+        
         return Result(result);
     }
     
@@ -51,6 +52,7 @@ public class OrderItemsController(
         CancellationToken cancellationToken)
     {
         var result = await mediator.Send(new GetOrderItemByIdQuery(orderItemId), cancellationToken);
+        
         return Result(result);
     }
     
@@ -61,7 +63,7 @@ public class OrderItemsController(
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with created orderItem information</returns>
     [HttpPost]
-    [Authorize(Policy = Policies.OnlyAdminAccess)]
+    [Authorize(Policy = Policies.AuthenticateAccess)]
     public async Task<IActionResult> CreateOrderItem(
         [FromBody] CreateOrderItemDto createOrderItemDto,
         CancellationToken cancellationToken)
@@ -78,14 +80,12 @@ public class OrderItemsController(
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with updated OrderItem information</returns>
     [HttpPut]
-    [Authorize(Policy = Policies.OnlyAdminAccess)]
+    [Authorize(Policy = Policies.AuthenticateAccess)]
     public async Task<IActionResult> UpdateOrderItem(
         [FromBody] UpdateOrderItemDto updateOrderItemDto,
         CancellationToken cancellationToken)
     {
-        var updateOrderItemCommand = mapper.Map<UpdateOrderItemCommand>(updateOrderItemDto);
-        
-        var result = await mediator.Send(updateOrderItemCommand, cancellationToken);
+        var result = await mediator.Send(mapper.Map<UpdateOrderItemCommand>(updateOrderItemDto), cancellationToken);
         
         return Result(result);
     }
@@ -93,16 +93,16 @@ public class OrderItemsController(
     /// <summary>
     /// Delete operation of OrderItem
     /// </summary>
-    /// <param name="deleteOrderItemDto">deleteOrderItemDto which contains id of user you want to delete</param>
+    /// <param name="orderItemId">Guid which contains id of orderItem you want to delete</param>
     /// <param name="cancellationToken">CancellationToken token of operation cancel</param>
     /// <returns>Result with status code of delete operation</returns>
-    [HttpDelete]
+    [HttpDelete("{orderItemId:guid}")]
     [Authorize(Policy = Policies.OnlyAdminAccess)]
     public async Task<IActionResult> DeleteOrderItem(
-        [FromBody] DeleteOrderItemDto deleteOrderItemDto,
+        [FromRoute] Guid orderItemId,
         CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(mapper.Map<DeleteOrderItemCommand>(deleteOrderItemDto), cancellationToken);
+        var result = await mediator.Send(new DeleteOrderItemCommand(orderItemId), cancellationToken);
         
         return Result(result);
     }

@@ -9,6 +9,5 @@ public record UpdateOrderCommand(
     decimal? TotalPrice,
     string? Status,
     DateTime? DeliveryDate,
-    Guid? UserId,
-    IEnumerable<Guid>? OrderItemIds)
+    Guid? UserId)
     : IRequest<Result<ReadOrderDto>>;

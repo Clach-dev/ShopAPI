@@ -7,4 +7,5 @@ namespace Application.Common.Dtos.Order;
 /// <param name="DeliveryDate">DateTime that contains DeliveryDate of Order</param>
 public record GetOrderByFilterDto(
     string? Status,
-    DateTime? DeliveryDate);
+    DateTime? DeliveryDate,
+    PageInfoDto PageInfoDto);

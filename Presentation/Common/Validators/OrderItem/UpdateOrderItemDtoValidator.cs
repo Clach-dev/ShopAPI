@@ -13,8 +13,7 @@ public class UpdateOrderItemDtoValidator : AbstractValidator<UpdateOrderItemDto>
         RuleFor(x => x.OrderId)!
             .NullableGuidRule();
         
-        RuleFor(x => x.Amount)!
-            .NotNull().WithMessage("Amount is required.")
-            .AmountRule();
+        RuleFor(x => x.Amount)
+            .NullableAmountRule();
     }
 }

@@ -39,7 +39,7 @@
     <data name="OrderItemIdNotFoundError" xml:space="preserve">
         <value>Item with this Id not found</value>
     </data>
-    <data name="OrderIdNotFound" xml:space="preserve">
+    <data name="OrderIdNotFoundError" xml:space="preserve">
         <value>Order with this Id not found</value>
     </data>
     <data name="ExistingProductError" xml:space="preserve">
@@ -56,5 +56,8 @@
     </data>
     <data name="CategoryIdNotFoundError" xml:space="preserve">
         <value>Category with this id not found</value>
+    </data>
+    <data name="CategoryConflictError" xml:space="preserve">
+        <value>There are dublicate of catetegory or wrong category Id</value>
     </data>
 </root>

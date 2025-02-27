@@ -18,9 +18,10 @@ public class CreateProductHandler(
     {
         var existingProduct = (await unitOfWork
                 .Products
-                .GetByPredicateAsync(product => product.Name == createProductCommand.Name &&
-                                                product.Description == createProductCommand.Description &&
-                                                product.Price.CompareTo(createProductCommand.Price) == 0 ,
+                .GetByPredicateAsync(product => 
+                        product.Name == createProductCommand.Name && 
+                        product.Description == createProductCommand.Description && 
+                        product.Price.CompareTo(createProductCommand.Price) == 0 ,
                     new PageInfo(),
                     cancellationToken)).Item1
             .FirstOrDefault();
@@ -30,7 +31,25 @@ public class CreateProductHandler(
         }
 
         var newProduct = mapper.Map<Product>(createProductCommand);
-
+        
+        
+        
+        if (createProductCommand.CategoryIds != null)
+        {
+            var existingCategories = await unitOfWork.Categories.GetByPredicateAsync(category =>
+                    createProductCommand.CategoryIds != null &&
+                    createProductCommand.CategoryIds.Contains(category.Id),
+                new PageInfo { PageNumber = 1, PageSize = createProductCommand.CategoryIds?.Count() ?? 0 },
+                cancellationToken);
+            
+            if (existingCategories.Item1.Count() != createProductCommand.CategoryIds?.Count() ||
+                existingCategories.Item1.Distinct().Count() != createProductCommand.CategoryIds?.Count())
+            {
+                return ResultBuilder.ConflictResult<ReadProductDto>(ErrorMessages.CategoryConflictError);
+            }
+            newProduct.Categories = existingCategories.Item1;
+        }
+        
         await unitOfWork.Products.CreateAsync(newProduct, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

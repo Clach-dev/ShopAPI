@@ -18,9 +18,10 @@ public class CreateOrderItemHandler(
     {
         var existingOrderItem = (await unitOfWork
                 .OrderItems
-                .GetByPredicateAsync(orderItem => orderItem.Amount == createOrderItemCommand.Amount &&
-                                                  orderItem.ProductId == createOrderItemCommand.ProductId &&
-                                                  orderItem.OrderId.CompareTo(createOrderItemCommand.OrderId) == 0 ,
+                .GetByPredicateAsync(orderItem =>
+                        orderItem.Amount == createOrderItemCommand.Amount &&
+                        orderItem.ProductId == createOrderItemCommand.ProductId &&
+                        orderItem.OrderId.CompareTo(createOrderItemCommand.OrderId) == 0 ,
                     new PageInfo(),
                     cancellationToken)).Item1
             .FirstOrDefault();
@@ -29,6 +30,12 @@ public class CreateOrderItemHandler(
             return ResultBuilder.ConflictResult<ReadOrderItemDto>(ErrorMessages.ExistingOrderItemError);
         }
 
+        if (await unitOfWork.Orders.GetByIdAsync(createOrderItemCommand.OrderId, cancellationToken) is null ||
+            await unitOfWork.Products.GetByIdAsync(createOrderItemCommand.ProductId, cancellationToken) is null)
+        {
+            return ResultBuilder.NotFoundResult<ReadOrderItemDto>(ErrorMessages.OrderItemDataNotFoundError);
+        }
+        
         var newOrderItem = mapper.Map<OrderItem>(createOrderItemCommand);
 
         await unitOfWork.OrderItems.CreateAsync(newOrderItem, cancellationToken);

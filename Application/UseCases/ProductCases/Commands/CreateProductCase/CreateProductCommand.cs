@@ -9,6 +9,5 @@ public record CreateProductCommand(
     string? Description,
     decimal Price,
     int Amount,
-    IEnumerable<Guid>? CategoryIds,
-    IEnumerable<Guid>? OrderItemIds)
+    IEnumerable<Guid>? CategoryIds)
     : IRequest<Result<ReadProductDto>>;

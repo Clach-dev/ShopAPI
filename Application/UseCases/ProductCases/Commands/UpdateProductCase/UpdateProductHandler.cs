@@ -34,7 +34,24 @@ public class UpdateProductHandler(
         {
             return ResultBuilder.ConflictResult<ReadProductDto>(ErrorMessages.ExistingProductError);
         }
-    
+
+        if (updateProductCommand.CategoryIds != null)
+        {
+            var existingCategories = await unitOfWork.Categories.GetByPredicateAsync(category =>
+                    updateProductCommand.CategoryIds != null &&
+                    updateProductCommand.CategoryIds.Contains(category.Id),
+                new PageInfo { PageNumber = 1, PageSize = updateProductCommand.CategoryIds?.Count() ?? 0 },
+                cancellationToken);
+            
+            if (existingCategories.Item1.Count() != updateProductCommand.CategoryIds?.Count() ||
+                existingCategories.Item1.Distinct().Count() != updateProductCommand.CategoryIds?.Count())
+            {
+                return ResultBuilder.ConflictResult<ReadProductDto>(ErrorMessages.CategoryConflictError);
+            }
+            currentProduct.Categories = existingCategories.Item1;
+        }
+        
+        
         mapper.Map(updateProductCommand, currentProduct);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     

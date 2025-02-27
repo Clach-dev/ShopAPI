@@ -21,8 +21,5 @@ public class UpdateOrderDtoValidator : AbstractValidator<UpdateOrderDto>
         
         RuleFor(x => x.UserId)!
             .NullableGuidRule();
-        
-        RuleFor(x => x.OrderItemIds)!
-            .GuidListRule();
     }
 }
