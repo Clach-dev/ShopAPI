@@ -1,7 +1,22 @@
-<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e87ab761_002Dd1e9_002D417b_002Da3e8_002Df350ac6ad832/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from UsersControllerTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;10827C23-E7A3-48FE-8933-406CD67CEF12/f:UsersControllerTests.cs&lt;/ProjectFile&gt;&#xD;
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AArgumentException_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F91cd9ea146b0b01ac23f87423d971d6bcb1120836a59d9b6bdb9873af8e_003FArgumentException_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ALateBoundTestFramework_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FSourcesCache_003F22647a7960d2619ab733924a2acfee09d32a8827c8c680a37cc4863678abec_003FLateBoundTestFramework_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=98d41ec3_002D1386_002D44eb_002D9097_002D6d0846d288ac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetUserById_NotExistingUserId_ReturnsNotFound" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.GetUserById_NotExistingUserId_ReturnsNotFound&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.UpdateUser_ValidData_ReturnsOk&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.UpdateUser_WrongUserId_ReturnsNotFound&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.UpdateUser_ExistingPhoneNumber_ReturnsConflict&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.UpdateUserRole_ValidData_ReturnsOk&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.UpdateUserRole_WrongUserId_ReturnsNotFound&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.DeleteUser_ValidData_ReturnsNoContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.DeleteUser_WrongUserId_ReturnsNotFound&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.DeleteUser_DeleteMyself_ReturnsNoContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.DeleteMyself_WrongUserId_ReturnsNoContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::Tests.UsersControllerTests.DeleteMyself_ValidData_ReturnsNoContent&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Application_002FCommon_002FUtils_002FErrorMessages/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Miscellaneous_0020Files_002FNygoqil/@EntryIndexedValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=Miscellaneous_0020Files_002FNygoqil/@EntryIndexRemoved">True</s:Boolean>
