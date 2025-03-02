@@ -1,7 +1,19 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b98f876_002Db043_002D4f31_002D9eb9_002D0628314842a1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;UnitTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b98f876_002Db043_002D4f31_002D9eb9_002D0628314842a1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;UnitTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::OrdersControllerTests.CreateOrder_ValidData_ReturnsOk&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::OrdersControllerTests.CreateOrder_OrderWithExistingUserId_ReturnsConflict&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8c187481_002Daf61_002D46ba_002D9677_002Dc6e46cd1e10e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllOrders_ReturnsOk" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::OrdersControllerTests.GetAllOrders_ReturnsOk&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::OrdersControllerTests.CreateOrder_OrderWithNotExistingUserId_ReturnsConflict&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=af76fbf9_002D5f68_002D433d_002D950e_002D27b18843a3d1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateOrder_OrderWithExistingUserId_ReturnsConflict" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::10827C23-E7A3-48FE-8933-406CD67CEF12::net9.0::OrdersControllerTests.GetAllOrders_ReturnsOk&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e87ab761_002Dd1e9_002D417b_002Da3e8_002Df350ac6ad832/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from UsersControllerTests.cs" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
