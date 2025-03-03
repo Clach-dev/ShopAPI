@@ -105,7 +105,7 @@ public class UsersControllerTests
         // Arrange
         var userEntity = _fixture.Build<User>().Without(u => u.Orders).Create();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         var registerUserDto = _fixture.Build<RegisterUserDto>()
@@ -184,7 +184,7 @@ public class UsersControllerTests
         // Arrange
         var userEntity = _fixture.Build<User>().Without(u => u.Orders).Create();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         // Act
@@ -307,7 +307,7 @@ public class UsersControllerTests
             .Without(u => u.Orders)
             .Create();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         var updateUserDto = _fixture.Build<UpdateUserDto>().Create();
@@ -355,8 +355,8 @@ public class UsersControllerTests
             .Without(u => u.Orders)
             .Create();
         
-        _shopDbContext.Users.Add(userEntity);
-        _shopDbContext.Users.Add(userEntity2);
+        await _shopDbContext.Users.AddAsync(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity2);
         await _shopDbContext.SaveChangesAsync();
         
         var updateUserDto = _fixture.Build<UpdateUserDto>()
@@ -389,8 +389,8 @@ public class UsersControllerTests
             .With(u => u.Role, Roles.User)
             .Create();
         
-        _shopDbContext.Users.Add(userEntity);
-        _shopDbContext.Users.Add(userEntity2);
+        await _shopDbContext.Users.AddAsync(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity2);
         await _shopDbContext.SaveChangesAsync();
         
         var updateUserRoleDto = _fixture.Build<UpdateUserRoleDto>()
@@ -426,7 +426,7 @@ public class UsersControllerTests
         // Arrange
         var userEntity = CreateAdminUser();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         var updateUserRoleDto = _fixture.Build<UpdateUserRoleDto>()
@@ -453,8 +453,8 @@ public class UsersControllerTests
             .Without(u => u.Orders)
             .Create();
         
-        _shopDbContext.Users.Add(userEntity);
-        _shopDbContext.Users.Add(userEntity2);
+        await _shopDbContext.Users.AddAsync(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity2);
         await _shopDbContext.SaveChangesAsync();
         
         // Act
@@ -478,7 +478,7 @@ public class UsersControllerTests
         // Arrange
         var userEntity = CreateAdminUser();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         // Act
@@ -498,7 +498,7 @@ public class UsersControllerTests
         // Arrange
         var userEntity = CreateAdminUser();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         // Act
@@ -525,7 +525,7 @@ public class UsersControllerTests
             .Without(u => u.Orders)
             .Create();
         
-        _shopDbContext.Users.Add(userEntity);
+        await _shopDbContext.Users.AddAsync(userEntity);
         await _shopDbContext.SaveChangesAsync();
         
         // Act
