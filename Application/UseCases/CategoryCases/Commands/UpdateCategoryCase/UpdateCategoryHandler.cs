@@ -19,7 +19,7 @@ public class UpdateCategoryHandler(
         var currentCategory = await unitOfWork.Categories.GetByIdAsync(updateCategoryCommand.Id, cancellationToken);
         if (currentCategory is null)
         {
-            return ResultBuilder.NotFoundResult<ReadCategoryDto>(ErrorMessages.CategoryNotFoundError);
+            return ResultBuilder.NotFoundResult<ReadCategoryDto>(ErrorMessages.CategoryIdNotFoundError);
         }
 
         var category = (await unitOfWork

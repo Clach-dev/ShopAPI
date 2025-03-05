@@ -18,7 +18,7 @@ public class GetCategoryByIdHandler(
         var categories = await unitOfWork.Categories.GetByIdAsync(getCategoryByIdQuery.Id, cancellationToken);
         if (categories == null)
         {
-            ResultBuilder.NotFoundResult<ReadCategoryDto>(ErrorMessages.CategoryIdNotFoundError);
+            return ResultBuilder.NotFoundResult<ReadCategoryDto>(ErrorMessages.CategoryIdNotFoundError);
         }
         
         var categoryDto = mapper.Map<ReadCategoryDto>(categories);
