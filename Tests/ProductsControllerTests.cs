@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Claims;
 using Application.Common.Dtos;
 using Application.Common.Dtos.Product;
 using Application.Common.MappingProfiles.UserProfiles;
@@ -16,7 +15,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Controllers;
 
@@ -25,15 +23,12 @@ namespace Tests;
 public class ProductsControllerTests
 {
     private const string DatabaseName = "TestDb";
-    private const string ConfigurationsFileName = "appsettings.json";
     
     private readonly ShopDbContext _shopDbContext;
     
     private readonly ProductsController _productsController;
     
     private readonly IFixture _fixture = new Fixture();
-    
-    private readonly Guid _userId = Guid.NewGuid();
     
     public ProductsControllerTests()
     {
@@ -45,23 +40,16 @@ public class ProductsControllerTests
 
         var services = new ServiceCollection();
 
-        var configurations = new ConfigurationBuilder().AddJsonFile(ConfigurationsFileName).Build();
-
         services
             .AddHttpContextAccessor()
             .AddAutoMapper(typeof(RegisterUserMappingProfile).Assembly)
             .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(RegisterUserHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
-            .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddSingleton<IConfiguration>(configurations);
+            .AddScoped<IUnitOfWork, UnitOfWork>();
 
         var serviceProvider = services.BuildServiceProvider();
         
         var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-        httpContextAccessor.HttpContext = new DefaultHttpContext();
-        httpContextAccessor.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity([
-            new Claim(ClaimTypes.NameIdentifier, _userId.ToString())
-        ], "TestAuth"));
         
         var mapper = serviceProvider.GetRequiredService<IMapper>();
         var mediatR = serviceProvider.GetRequiredService<IMediator>();
