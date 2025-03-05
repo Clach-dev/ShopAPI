@@ -3,7 +3,7 @@ using Application.Common.Dtos;
 using Application.Common.Dtos.Category;
 using Application.Common.MappingProfiles.UserProfiles;
 using Application.Common.Utils;
-using Application.UseCases.UserCases.Commands.RegisterUserCase;
+using Application.UseCases.CategoryCases.Commands.CreateCategoryCase;
 using AutoFixture;
 using AutoMapper;
 using Domain.Entities;
@@ -43,7 +43,7 @@ public class CategoriesControllerTests
         services
             .AddHttpContextAccessor()
             .AddAutoMapper(typeof(RegisterUserMappingProfile).Assembly)
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(RegisterUserHandler).Assembly))
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateCategoryHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
             .AddScoped<IUnitOfWork, UnitOfWork>();
 

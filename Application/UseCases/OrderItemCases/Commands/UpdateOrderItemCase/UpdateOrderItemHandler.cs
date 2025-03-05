@@ -19,7 +19,7 @@ public class UpdateOrderItemHandler(
         var currentOrderItem = await unitOfWork.OrderItems.GetByIdAsync(updateOrderItemCommand.Id, cancellationToken);
         if (currentOrderItem is null)
         {
-            return ResultBuilder.NotFoundResult<ReadOrderItemDto>(ErrorMessages.OrderItemDataNotFoundError);
+            return ResultBuilder.NotFoundResult<ReadOrderItemDto>(ErrorMessages.OrderItemIdNotFoundError);
         }
     
         var existingOrderItem = (await unitOfWork

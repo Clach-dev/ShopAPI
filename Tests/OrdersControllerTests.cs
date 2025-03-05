@@ -7,10 +7,8 @@ using Application.UseCases.OrderCases.Commands.CreateOrderCase;
 using AutoFixture;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Interfaces.IAlgorithms;
 using Domain.Interfaces.IRepositories;
 using FluentAssertions;
-using Infrastructure.Algorithms;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using MediatR;
@@ -48,10 +46,7 @@ public class OrdersControllerTests
             .AddAutoMapper(typeof(CreateOrderMappingProfile).Assembly)
             .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateOrderHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
-            .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<IPasswordHasher, PasswordHasher>()
-            .AddSingleton<IConfiguration>(new ConfigurationBuilder().Build())
-            .AddScoped<ITokensGenerator, TokensGenerator>();
+            .AddScoped<IUnitOfWork, UnitOfWork>();
 
         var serviceProvider = services.BuildServiceProvider();
         
@@ -66,7 +61,9 @@ public class OrdersControllerTests
     public async Task CreateOrder_ValidData_ReturnsOk()
     {
         // Arrange
-        var user = _fixture.Build<User>().Without(u => u.Orders).Create();
+        var user = _fixture.Build<User>()
+            .Without(u => u.Orders)
+            .Create();
         await _shopDbContext.Users.AddAsync(user);
         await _shopDbContext.SaveChangesAsync();
         
@@ -114,12 +111,18 @@ public class OrdersControllerTests
     }
     
     [Fact]
-    public async Task GetAllOrders_ReturnsOk()
+    public async Task GetAllOrders_WithData_ReturnsOk()
     {
         // Arrange
-        var user = _fixture.Build<User>().Without(u => u.Orders).Create();
+        var user = _fixture.Build<User>()
+            .Without(u => u.Orders)
+            .Create();
 
-        var orders = _fixture.Build<Order>().With(x => x.UserId, user.Id).Without(x => x.OrderItems).Without(x => x.User).CreateMany(3).ToList();
+        var orders = _fixture.Build<Order>()
+            .With(x => x.UserId, user.Id)
+            .Without(x => x.OrderItems)
+            .Without(x => x.User)
+            .CreateMany(3).ToList();
         await _shopDbContext.Users.AddAsync(user);
         await _shopDbContext.Orders.AddRangeAsync(orders);
         await _shopDbContext.SaveChangesAsync();
@@ -132,13 +135,9 @@ public class OrdersControllerTests
         
         var result = act.As<ObjectResult>().Value.As<Result<ReadOrdersDto>>();
         
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeTrue();
-        result.StatusCode.Should().Be(HttpStatusCode.OK);
-        result.Value.Should().NotBeNull();
-        result.Errors.Should().BeNull();
+        CheckSuccessResult(result);
         
-        result.Value.Orders.Should().HaveCount(3);
+        result.Value!.Orders.Should().HaveCount(3);
         
         result.Value.Orders.Should().BeEquivalentTo(orders, options => options
             .Excluding(x => x.TotalPrice)
@@ -167,7 +166,6 @@ public class OrdersControllerTests
         CheckSuccessResult(result);
         
         result.Value!.Orders.Should().HaveCount(0);
-        
         result.Value.TotalCount.Should().Be(0);
     }
     
@@ -175,7 +173,10 @@ public class OrdersControllerTests
     public async Task GetOrderById_ValidData_ReturnsOk()
     {
         // Arrange
-        var orderEntity = _fixture.Build<Order>().Without(u => u.User).Without(x => x.OrderItems).Create();
+        var orderEntity = _fixture.Build<Order>()
+            .Without(u => u.User)
+            .Without(x => x.OrderItems)
+            .Create();
         
         _shopDbContext.Orders.Add(orderEntity);
         await _shopDbContext.SaveChangesAsync();

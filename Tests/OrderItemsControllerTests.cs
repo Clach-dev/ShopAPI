@@ -3,21 +3,18 @@ using Application.Common.Dtos;
 using Application.Common.Dtos.OrderItem;
 using Application.Common.MappingProfiles.OrderItemProfiles;
 using Application.Common.Utils;
-using Application.UseCases.OrderCases.Commands.CreateOrderCase;
+using Application.UseCases.OrderItemCases.Commands.CreateOrderItemCase;
 using AutoFixture;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Interfaces.IAlgorithms;
 using Domain.Interfaces.IRepositories;
 using FluentAssertions;
-using Infrastructure.Algorithms;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Presentation.Controllers;
 
@@ -46,12 +43,9 @@ public class OrderItemsControllerTests
         services
             .AddHttpContextAccessor()
             .AddAutoMapper(typeof(CreateOrderItemMappingProfile).Assembly)
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateOrderHandler).Assembly))
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateOrderItemHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
-            .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<IPasswordHasher, PasswordHasher>()
-            .AddSingleton<IConfiguration>(new ConfigurationBuilder().Build())
-            .AddScoped<ITokensGenerator, TokensGenerator>();
+            .AddScoped<IUnitOfWork, UnitOfWork>();
 
         var serviceProvider = services.BuildServiceProvider();
         
@@ -63,18 +57,11 @@ public class OrderItemsControllerTests
     }
     
     [Fact]
-    public async Task CreateOrder_ValidData_ReturnsOk()
+    public async Task CreateOrderItem_ValidData_ReturnsOk()
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
@@ -108,24 +95,14 @@ public class OrderItemsControllerTests
     public async Task CreateOrderItem_ExistingOrderItem_ReturnsConflict() 
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
         await _shopDbContext.SaveChangesAsync();
 
-        var orderItem = _fixture.Build<OrderItem>()
-            .With(u => u.Order, order)
-            .With(u => u.Product, product)
-            .Create();
+        var orderItem = CreateOrderItemEntity(order, product);
         
         await _shopDbContext.OrderItems.AddAsync(orderItem);
         await _shopDbContext.SaveChangesAsync();
@@ -152,13 +129,10 @@ public class OrderItemsControllerTests
     }
     
     [Fact]
-    public async Task CreateOrderItem_WrongOrderItemData_ReturnsOrderItemDataNotFoundError()
+    public async Task CreateOrderItem_WrongOrderItemData_ReturnsNotFound()
     {
         // Arrange
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.SaveChangesAsync();
@@ -184,54 +158,7 @@ public class OrderItemsControllerTests
         act.Should().BeOfType<ObjectResult>();
         
         var result = act.As<ObjectResult>().Value.As<Result<ReadOrderItemDto>>();
-        
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        result.Value.Should().BeNull();
-        result.Errors.Should().Contain(ErrorMessages.OrderItemDataNotFoundError);
-    }
-    
-    [Fact]
-    public async Task DeleteOrderItem_ValidData_ReturnsNoContent()
-    {
-        // Arrange
-        var orderItemEntity = _fixture.Build<OrderItem>()
-            .Without(u => u.Order)
-            .Without(u => u.Product)
-            .Create();
 
-        await _shopDbContext.OrderItems.AddAsync(orderItemEntity);
-        await _shopDbContext.SaveChangesAsync();
-        
-        // Act
-        var act = await _orderItemsController.DeleteOrderItem(orderItemEntity.Id, default);
-        
-        // Assert
-        act.Should().BeOfType<ObjectResult>();
-        
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
-        
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeTrue();
-        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
-        result.Value.Should().BeNull();
-        result.Errors.Should().BeNull();
-    }
-   
-    [Fact]
-    public async Task DeleteOrderItem_WrongOrderItemId_ReturnsNotFound()
-    {
-        // Arrange
-        
-        // Act
-        var act = await _orderItemsController.DeleteOrderItem(Guid.NewGuid(), default);
-        
-        // Assert
-        act.Should().BeOfType<ObjectResult>();
-        
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
-        
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeFalse();
         result.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -261,11 +188,29 @@ public class OrderItemsControllerTests
         
         CheckSuccessResult(result);
         
-        result.Value!.ReadOrderItemDtos.Should().BeEquivalentTo(orderItemEntities, options => options
+        result.Value!.TotalCount.Should().Be(orderItemEntities.Count());
+        result.Value.ReadOrderItemDtos.Should().BeEquivalentTo(orderItemEntities, options => options
             .Excluding(p => p.Order)
             .Excluding(p => p.Product));
+    }
+    
+    [Fact]
+    public async Task GetAllOrderItems_WithNoData_ReturnsOk()
+    {
+        // Arrange
+
+        // Act
+        var act = await _orderItemsController.GetAllOrderItems(new PageInfoDto(), default);
         
-        result.Value.TotalCount.Should().Be(orderItemEntities.Count());
+        // Assert
+        act.Should().BeOfType<ObjectResult>();
+        
+        var result = act.As<ObjectResult>().Value.As<Result<ReadOrderItemsDto>>();
+        
+        CheckSuccessResult(result);
+        
+        result.Value!.TotalCount.Should().Be(0);
+        result.Value.ReadOrderItemDtos.Should().BeEmpty();
     }
     
     [Fact]
@@ -308,26 +253,15 @@ public class OrderItemsControllerTests
         
         var result = act.As<ObjectResult>().Value.As<Result<ReadOrderItemDto>>();
         
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        result.Value.Should().BeNull();
-        result.Errors.Should().Contain(ErrorMessages.OrderItemDataNotFoundError);
+        CheckNotFoundResult(result);
     }
     
     [Fact]
     public async Task UpdateOrderItem_ValidData_ReturnsOk()
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
@@ -364,24 +298,14 @@ public class OrderItemsControllerTests
     public async Task UpdateOrderItem_ExistingOrderItem_ReturnsConflict()
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
         await _shopDbContext.SaveChangesAsync();
 
-        var orderItem = _fixture.Build<OrderItem>()
-            .With(u => u.Order, order)
-            .With(u => u.Product, product)
-            .Create();
+        var orderItem = CreateOrderItemEntity(order, product);
         
         await _shopDbContext.OrderItems.AddAsync(orderItem);
         await _shopDbContext.SaveChangesAsync();
@@ -425,35 +349,21 @@ public class OrderItemsControllerTests
         
         var result = act.As<ObjectResult>().Value.As<Result<ReadOrderItemDto>>();
         
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeFalse();
-        result.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        result.Value.Should().BeNull();
-        result.Errors.Should().Contain(ErrorMessages.OrderItemDataNotFoundError);
+        CheckNotFoundResult(result);
     }
     
     [Fact]
-    public async Task UpdateOrderItem_OrderIdNotFound_ReturnOrderIdNotFoundError()
+    public async Task UpdateOrderItem_OrderIdNotFound_ReturnsNotFound()
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
         await _shopDbContext.SaveChangesAsync();
 
-        var orderItem = _fixture.Build<OrderItem>()
-            .With(u => u.Order, order)
-            .With(u => u.Product, product)
-            .Create();
+        var orderItem = CreateOrderItemEntity(order, product);
         
         await _shopDbContext.OrderItems.AddAsync(orderItem);
         await _shopDbContext.SaveChangesAsync();
@@ -481,27 +391,17 @@ public class OrderItemsControllerTests
     }
     
     [Fact]
-    public async Task UpdateOrder_ProductIdNotFound_ReturnProductIdNotFoundError()
+    public async Task UpdateOrder_ProductIdNotFound_ReturnsNotFound()
     {
         // Arrange
-        var order = _fixture.Build<Order>()
-            .Without(u => u.User)
-            .Without(u => u.UserId)
-            .Without(u => u.OrderItems)
-            .Create();
-        var product = _fixture.Build<Product>()
-            .Without(u => u.Categories)
-            .Without(u => u.OrderItems)
-            .Create();
+        var order = CreateOrderEntity();
+        var product = CreateProductEntity();
         
         await _shopDbContext.Products.AddAsync(product);
         await _shopDbContext.Orders.AddAsync(order);
         await _shopDbContext.SaveChangesAsync();
 
-        var orderItem = _fixture.Build<OrderItem>()
-            .With(u => u.Order, order)
-            .With(u => u.Product, product)
-            .Create();
+        var orderItem = CreateOrderItemEntity(order, product);
         
         await _shopDbContext.OrderItems.AddAsync(orderItem);
         await _shopDbContext.SaveChangesAsync();
@@ -527,6 +427,74 @@ public class OrderItemsControllerTests
         result.Value.Should().BeNull();
         result.Errors.Should().Contain(ErrorMessages.ProductIdNotFound);
     }
+
+    [Fact]
+    public async Task DeleteOrderItem_ValidData_ReturnsNoContent()
+    {
+        // Arrange
+        var orderItemEntity = _fixture.Build<OrderItem>()
+            .Without(u => u.Order)
+            .Without(u => u.Product)
+            .Create();
+
+        await _shopDbContext.OrderItems.AddAsync(orderItemEntity);
+        await _shopDbContext.SaveChangesAsync();
+        
+        // Act
+        var act = await _orderItemsController.DeleteOrderItem(orderItemEntity.Id, default);
+        
+        // Assert
+        act.Should().BeOfType<ObjectResult>();
+        
+        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        
+        result.Should().NotBeNull();
+        result.IsSuccess.Should().BeTrue();
+        result.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        result.Value.Should().BeNull();
+        result.Errors.Should().BeNull();
+    }
+   
+    [Fact]
+    public async Task DeleteOrderItem_WrongOrderItemId_ReturnsNotFound()
+    {
+        // Arrange
+        
+        // Act
+        var act = await _orderItemsController.DeleteOrderItem(Guid.NewGuid(), default);
+        
+        // Assert
+        act.Should().BeOfType<ObjectResult>();
+        
+        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        
+        CheckNotFoundResult(result);
+    }
+    
+    private Order CreateOrderEntity()
+    {
+        return _fixture.Build<Order>()
+            .Without(u => u.User)
+            .Without(u => u.UserId)
+            .Without(u => u.OrderItems)
+            .Create();
+    }
+
+    private Product CreateProductEntity()
+    {
+        return _fixture.Build<Product>()
+            .Without(u => u.Categories)
+            .Without(u => u.OrderItems)
+            .Create();
+    }
+
+    private OrderItem CreateOrderItemEntity(Order order, Product product)
+    {
+        return _fixture.Build<OrderItem>()
+            .With(u => u.Order, order)
+            .With(u => u.Product, product)
+            .Create();
+    }
     
     private static void CheckSuccessResult<T>(Result<T> result)
     {
@@ -535,5 +503,14 @@ public class OrderItemsControllerTests
         result.StatusCode.Should().Be(HttpStatusCode.OK);
         result.Value.Should().NotBeNull();
         result.Errors.Should().BeNull();
+    }
+
+    private static void CheckNotFoundResult<T>(Result<T> result)
+    {
+        result.Should().NotBeNull();
+        result.IsSuccess.Should().BeFalse();
+        result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        result.Value.Should().BeNull();
+        result.Errors.Should().Contain(ErrorMessages.OrderItemIdNotFoundError);
     }
 }

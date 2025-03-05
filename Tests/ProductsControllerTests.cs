@@ -3,7 +3,7 @@ using Application.Common.Dtos;
 using Application.Common.Dtos.Product;
 using Application.Common.MappingProfiles.UserProfiles;
 using Application.Common.Utils;
-using Application.UseCases.UserCases.Commands.RegisterUserCase;
+using Application.UseCases.ProductCases.Commands.CreateProductCase;
 using AutoFixture;
 using AutoMapper;
 using Domain.Entities;
@@ -43,7 +43,7 @@ public class ProductsControllerTests
         services
             .AddHttpContextAccessor()
             .AddAutoMapper(typeof(RegisterUserMappingProfile).Assembly)
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(RegisterUserHandler).Assembly))
+            .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateProductHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
             .AddScoped<IUnitOfWork, UnitOfWork>();
 
