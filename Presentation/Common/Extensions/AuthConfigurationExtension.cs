@@ -45,4 +45,20 @@ public static class AuthConfigurationExtension
         
         return services;
     }
+    
+    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    {
+        return services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAngular", builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("Content-Disposition")  
+                    .SetIsOriginAllowed(_ => true);  
+            });
+        });
+    }
 }

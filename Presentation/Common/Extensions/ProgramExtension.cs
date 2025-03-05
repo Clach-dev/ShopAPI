@@ -21,6 +21,7 @@ public static class ProgramExtension
         
         builder.Services
             .AddPolicies()
+            .AddCorsPolicy()
             .AddJwtValidation(builder.Configuration);
         
         builder.Services
@@ -57,6 +58,7 @@ public static class ProgramExtension
         app
             .UseHttpsRedirection()
             .UseMiddleware<LoggingMiddleware>()
+            .UseCors("AllowAngular")
             .UseAuthentication()
             .UseAuthorization();
         
@@ -64,10 +66,5 @@ public static class ProgramExtension
             .MapControllers();
 
         return app;
-    }
-
-    public static void Run(this WebApplication app)
-    {
-        app.Run();
     }
 }
