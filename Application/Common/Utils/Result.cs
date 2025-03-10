@@ -8,4 +8,4 @@ public record Result<T>(
     [property: JsonIgnore]
     HttpStatusCode StatusCode,
     T? Value,
-    string[] Errors);
+    string[]? Errors);

@@ -16,7 +16,7 @@ public class DeleteCategoryHandler(
         var category = await unitOfWork.Categories.GetByIdAsync(deleteCategoryCommand.Id, cancellationToken);
         if (category is null)
         {
-            return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.CategoryNotFoundError);
+            return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.CategoryIdNotFoundError);
         }
         
         await unitOfWork.Categories.Delete(category);

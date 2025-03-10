@@ -45,6 +45,6 @@ public class TokensGenerator(IConfiguration configuration) : ITokensGenerator
 
     private T GetJwtSetting<T>(string key)
     {
-        return configuration.GetValue<T>($"JwtSettings:{key}") ?? throw new ArgumentNullException(nameof(configuration), ErrorMessages.JwtSettingsNotFoundError);
+        return configuration.GetValue<T>($"JwtSettings:{key}") ?? throw new ArgumentNullException(nameof(configuration));
     }
 }

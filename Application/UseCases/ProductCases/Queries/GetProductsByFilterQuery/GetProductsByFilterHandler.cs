@@ -17,16 +17,15 @@ public class GetProductsByFilterHandler(
         CancellationToken cancellationToken)
     {
         var products = await unitOfWork.Products.GetByPredicateAsync(product =>
-                (getProductsByFilterQuery.Name == null ||
-                 product.Name.Contains(getProductsByFilterQuery.Name)) &&
-                (!getProductsByFilterQuery.CategoryIds.Any() ||
-                 (getProductsByFilterQuery.MaxPrice == null ||
-                 product.Price <= getProductsByFilterQuery.MaxPrice) ||
-                 (getProductsByFilterQuery.MinPrice == null ||
-                  product.Price >= getProductsByFilterQuery.MinPrice) ||
-                 getProductsByFilterQuery.CategoryIds.All(categoryId =>
-                     product.Categories != null &&
-                     product.Categories.Select(b => b.Id).Contains(categoryId))),
+                (getProductsByFilterQuery.Name == null || 
+                 product.Name.Contains(getProductsByFilterQuery.Name)) && 
+                    (getProductsByFilterQuery.MaxPrice == null || 
+                     product.Price <= getProductsByFilterQuery.MaxPrice) && 
+                    (getProductsByFilterQuery.MinPrice == null || 
+                     product.Price >= getProductsByFilterQuery.MinPrice) && 
+                (!getProductsByFilterQuery.CategoryIds.Any() || 
+                 getProductsByFilterQuery.CategoryIds.All(categoryId => 
+                     product.Categories!.Where(c => c.Id == categoryId).Any())),
             mapper.Map<PageInfo>(getProductsByFilterQuery.PageInfoDto),
             cancellationToken);
         
