@@ -29,6 +29,14 @@ public class GetProductsByFilterHandler(
             mapper.Map<PageInfo>(getProductsByFilterQuery.PageInfoDto),
             cancellationToken);
         
+        foreach (var product in products.Item1)
+        {
+            if (product.ImageUri != null)
+            {
+                product.ImageUri = unitOfWork.ProductImages.GetReadOnlyImageUri(product.ImageUri);
+            }
+        }
+        
         var productsReadDto = new ReadProductsDto(mapper.Map<IEnumerable<ReadProductDto>>(products.Item1), products.Item2);
         
         return ResultBuilder.SuccessResult(productsReadDto);

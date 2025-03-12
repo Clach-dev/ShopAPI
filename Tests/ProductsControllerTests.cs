@@ -6,6 +6,7 @@ using Application.Common.Utils;
 using Application.UseCases.ProductCases.Commands.CreateProductCase;
 using AutoFixture;
 using AutoMapper;
+using Azure.Storage.Blobs;
 using Domain.Entities;
 using Domain.Interfaces.IRepositories;
 using FluentAssertions;
@@ -15,7 +16,9 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Presentation.Controllers;
 
 namespace Tests;
@@ -34,54 +37,60 @@ public class ProductsControllerTests
     {
         _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
         _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        _fixture.Customize<IFormFile>(c => c.FromFactory(() => Mock.Of<IFormFile>()));
         
         var options = new DbContextOptionsBuilder<ShopDbContext>().UseInMemoryDatabase(DatabaseName).Options;
         _shopDbContext = new ShopDbContext(options);
 
+        var mockBlobServiceClient = new Mock<BlobServiceClient>();
+        
         var services = new ServiceCollection();
 
         services
+            .AddSingleton<IConfiguration>(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build())
             .AddHttpContextAccessor()
             .AddAutoMapper(typeof(RegisterUserMappingProfile).Assembly)
             .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(CreateProductHandler).Assembly))
             .AddDbContext<ShopDbContext>(opt => opt.UseInMemoryDatabase(DatabaseName))
+            .AddSingleton(mockBlobServiceClient.Object)
             .AddScoped<IUnitOfWork, UnitOfWork>();
 
         var serviceProvider = services.BuildServiceProvider();
         
         var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
-        
         var mapper = serviceProvider.GetRequiredService<IMapper>();
         var mediatR = serviceProvider.GetRequiredService<IMediator>();
         
         _productsController = new ProductsController(httpContextAccessor, mapper, mediatR);
     }
     
-    [Fact]
-    public async Task CreateProduct_ValidData_ReturnsOk()
-    {
-        // Arrange
-        var createProductDto = _fixture.Build<CreateProductDto>()
-            .With(p => p.CategoryIds, new List<Guid>())
-            .Create();
-        
-        // Act
-        var act = await _productsController.CreateProduct(createProductDto, default);
-        
-        // Assert
-        act.Should().BeOfType<ObjectResult>();
-        
-        var result = act.As<ObjectResult>().Value.As<Result<ReadProductDto>>();
-        
-        result.Should().NotBeNull();
-        result.IsSuccess.Should().BeTrue();
-        result.StatusCode.Should().Be(HttpStatusCode.Created);
-        result.Value.Should().NotBeNull();
-        result.Errors.Should().BeNull();
-        
-        result.Value.Should().BeEquivalentTo(createProductDto, options =>
-            options.Excluding(x => x.CategoryIds));
-    }
+[Fact]
+public async Task CreateProduct_ValidData_ReturnsOk()
+{
+    // Arrange
+    var createProductDto = _fixture.Build<CreateProductDto>()
+        .With(p => p.CategoryIds, new List<Guid>())
+        .With(p => p.Image, (IFormFile)null)
+        .Create();
+
+    // Act
+    var act = await _productsController.CreateProduct(createProductDto, default);
+
+    // Assert
+    act.Should().BeOfType<ObjectResult>();
+
+    var result = act.As<ObjectResult>().Value.As<Result<ReadProductDto>>();
+
+    result.Should().NotBeNull();
+    result.IsSuccess.Should().BeTrue();
+    result.StatusCode.Should().Be(HttpStatusCode.Created);
+    result.Value.Should().NotBeNull();
+    result.Errors.Should().BeNull();
+
+    result.Value.Should().BeEquivalentTo(createProductDto, options =>
+        options.Excluding(x => x.CategoryIds)
+               .Excluding(x => x.Image));
+}
     
     [Fact]
     public async Task CreateProduct_ExistingProduct_ReturnsConflict()
@@ -97,6 +106,7 @@ public class ProductsControllerTests
             .With(p => p.Description, productEntity.Description)
             .With(p => p.Price, productEntity.Price)
             .With(p => p.CategoryIds, new List<Guid>())
+            .With(p => p.Image, (IFormFile)null)
             .Create();
         
         // Act
@@ -162,6 +172,7 @@ public class ProductsControllerTests
         var productEntities = _fixture.Build<Product>()
             .Without(p => p.Categories)
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .CreateMany(3).ToList();
 
         _shopDbContext.Products.AddRange(productEntities);
@@ -262,6 +273,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 1000)
             .Without(p => p.Categories)
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
     
         var productEntity2 = _fixture.Build<Product>()
@@ -269,6 +281,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 2000)
             .With(p => p.Categories, new List<Category>() { categoryEntity })
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
         
         await _shopDbContext.Products.AddAsync(productEntity);
@@ -312,6 +325,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 1000)
             .Without(p => p.Categories)
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
     
         var productEntity2 = _fixture.Build<Product>()
@@ -319,6 +333,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 2000)
             .With(p => p.Categories, new List<Category>() { categoryEntity })
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
         
         await _shopDbContext.Products.AddAsync(productEntity);
@@ -362,6 +377,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 1000)
             .Without(p => p.Categories)
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
     
         var productEntity2 = _fixture.Build<Product>()
@@ -369,6 +385,7 @@ public class ProductsControllerTests
             .With(p => p.Price, 2000)
             .With(p => p.Categories, new List<Category>() { categoryEntity })
             .Without(p => p.OrderItems)
+            .Without(p => p.ImageUri)
             .Create();
         
         await _shopDbContext.Products.AddAsync(productEntity);
@@ -410,6 +427,7 @@ public class ProductsControllerTests
         var updateProductDto = _fixture.Build<UpdateProductDto>()
             .With(p => p.Id, productEntity.Id)
             .With(p => p.CategoryIds, new List<Guid>())
+            .With(p => p.Image, (IFormFile)null)
             .Create();
         
         // Act
@@ -423,7 +441,8 @@ public class ProductsControllerTests
         CheckSuccessResult(result);
 
         result.Value.Should().BeEquivalentTo(updateProductDto, options => 
-            options.Excluding(p => p.CategoryIds));
+            options.Excluding(p => p.CategoryIds)
+                .Excluding(p => p.Image));
     }
     
     [Fact]
@@ -431,15 +450,18 @@ public class ProductsControllerTests
     {
         // Arrange
         var productEntity = CreateProductEntity();
+        var productEntity2 = CreateProductEntity();
 
         await _shopDbContext.Products.AddAsync(productEntity);
+        await _shopDbContext.Products.AddAsync(productEntity2);
         await _shopDbContext.SaveChangesAsync();
         
         var updateProductDto = _fixture.Build<UpdateProductDto>()
-            .With(p => p.Id, productEntity.Id)
+            .With(p => p.Id, productEntity2.Id)
             .With(p => p.Name, productEntity.Name)
             .With(p => p.Description, productEntity.Description)
             .With(p => p.Price, productEntity.Price)
+            .With(p => p.Image, (IFormFile)null)
             .Create();
         
         // Act
@@ -526,12 +548,12 @@ public class ProductsControllerTests
         // Assert
         act.Should().BeOfType<ObjectResult>();
         
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        var result = act.As<ObjectResult>().Value.As<Result<Unit>>();
         
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
         result.StatusCode.Should().Be(HttpStatusCode.NoContent);
-        result.Value.Should().BeNull();
+        result.Value.Should().Be(Unit.Value);
         result.Errors.Should().BeNull();
     }
    
@@ -546,16 +568,17 @@ public class ProductsControllerTests
         // Assert
         act.Should().BeOfType<ObjectResult>();
         
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        var result = act.As<ObjectResult>().Value.As<Result<Unit>>();
         
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeFalse();
         result.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        result.Value.Should().BeNull();
+        result.Value.Should().Be(Unit.Value);
         result.Errors.Should().Contain(ErrorMessages.ProductIdNotFoundError);
     }
     
     private Product CreateProductEntity() => _fixture.Build<Product>()
+        .Without(p => p.ImageUri)
         .Without(p => p.Categories)
         .Without(p => p.OrderItems)
         .Create();

@@ -1,9 +1,24 @@
-﻿services:
+﻿version: '3.8'
+
+services:
   sqlserver:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sqlserver
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Pa55w0rd!"
       MSSQL_PID: "Express"
     ports:
       - "1433:1433"
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: productImages
+    ports:
+      - "10000:10000"
+    volumes:
+      - azurite_data:/data
+    command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
+
+volumes:
+  azurite_data:

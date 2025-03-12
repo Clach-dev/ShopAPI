@@ -31,6 +31,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired(true);
 
         builder
+            .Property(product => product.ImageUri)
+            .IsRequired(false);
+        
+        builder
             .HasMany(product => product.Categories)
             .WithMany(category => category.Products);
 

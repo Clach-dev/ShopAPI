@@ -5,4 +5,4 @@ namespace Application.UseCases.UserCases.Commands.DeleteUserCase;
 
 public record DeleteUserCommand(
     Guid Id)
-    : IRequest<Result<byte?>>;
+    : IRequest<Result<Unit>>;

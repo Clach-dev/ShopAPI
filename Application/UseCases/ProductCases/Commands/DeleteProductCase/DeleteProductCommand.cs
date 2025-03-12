@@ -5,4 +5,4 @@ namespace Application.UseCases.ProductCases.Commands.DeleteProductCase;
 
 public record DeleteProductCommand(
     Guid ProductId)
-    : IRequest<Result<byte?>>;
+    : IRequest<Result<Unit>>;

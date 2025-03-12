@@ -446,7 +446,7 @@ public class OrderItemsControllerTests
         // Assert
         act.Should().BeOfType<ObjectResult>();
         
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        var result = act.As<ObjectResult>().Value.As<Result<Unit>>();
         
         result.Should().NotBeNull();
         result.IsSuccess.Should().BeTrue();
@@ -466,7 +466,7 @@ public class OrderItemsControllerTests
         // Assert
         act.Should().BeOfType<ObjectResult>();
         
-        var result = act.As<ObjectResult>().Value.As<Result<byte?>>();
+        var result = act.As<ObjectResult>().Value.As<Result<Unit>>();
         
         CheckNotFoundResult(result);
     }

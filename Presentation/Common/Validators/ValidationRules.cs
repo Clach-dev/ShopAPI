@@ -1,12 +1,26 @@
-﻿using System.Globalization;
-using Domain.Enums;
+﻿using Domain.Enums;
 using FluentValidation;
+using SixLabors.ImageSharp;
 
 namespace Presentation.Common.Validators;
 
 public static class ValidationRules
 {
     private const string NameRegex = "^[a-zA-Z'-]+$";
+
+    private static bool IsValidImageFormat(string contentType)
+    {
+        var validFormats = new[] { "image/jpeg", "image/png", "image/webp" };
+        return validFormats.Contains(contentType);
+    }
+
+    private static bool IsValidImageDimensions(IFormFile file)
+    {
+        using var stream = file.OpenReadStream();
+        var img = Image.Load(stream);
+        
+        return img.Width >= 100 && img is { Width: <= 5000, Height: >= 100 and <= 5000 };
+    }
     
     public static IRuleBuilder<T, TProperty> NotEmptyRule<T, TProperty>(this IRuleBuilder<T, TProperty> ruleBuilder)
         where TProperty : class 
@@ -158,5 +172,16 @@ public static class ValidationRules
             .WithMessage("Delivery date must be in future")
             .LessThanOrEqualTo(DateTime.UtcNow.AddMonths(3))
             .WithMessage("Delivery date cannot be more than 2 month from today.");
+    }
+    
+    public static IRuleBuilder<T, IFormFile?> ValidImageFileRule<T>(this IRuleBuilder<T, IFormFile?> ruleBuilder)
+    {
+        return ruleBuilder
+            .Must(file => file != null && IsValidImageFormat(file.ContentType))
+            .WithMessage("The uploaded file must be an image (JPEG, PNG, or WebP).")
+            .Must(file => file!.Length <= 5 * 1024 * 1024)
+            .WithMessage("The image size must be less than or equal to 5 MB.")
+            .Must(IsValidImageDimensions!)
+            .WithMessage("The image must have a width and height between 100px and 5000px.");
     }
 }

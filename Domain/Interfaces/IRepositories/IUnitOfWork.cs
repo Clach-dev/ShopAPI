@@ -1,10 +1,14 @@
-﻿namespace Domain.Interfaces.IRepositories;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+
+namespace Domain.Interfaces.IRepositories;
 
 public interface IUnitOfWork : IDisposable
 {
     ICategoryRepository Categories { get; }
     
     IProductRepository Products { get; }
+    
+    IProductImageRepository ProductImages { get; }
     
     IOrderRepository Orders { get; }
     
@@ -13,6 +17,10 @@ public interface IUnitOfWork : IDisposable
     IUserRepository Users { get; }
     
     IRefreshTokenRepository RefreshTokens { get; }
+    
+    // Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken);
+
+    
     
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

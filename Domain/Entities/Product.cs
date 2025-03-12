@@ -9,6 +9,8 @@ public class Product : BaseEntity
     public decimal Price { get; set; }
     
     public int Amount { get; set; }
+
+    public Uri? ImageUri { get; set; }
     
     public virtual IEnumerable<Category>? Categories { get; set; }
     
