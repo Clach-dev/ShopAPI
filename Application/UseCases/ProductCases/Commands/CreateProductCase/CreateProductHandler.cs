@@ -1,4 +1,5 @@
-﻿using Application.Common.Dtos.Product;
+﻿using System.Transactions;
+using Application.Common.Dtos.Product;
 using Application.Common.Utils;
 using AutoMapper;
 using Domain.Entities;
@@ -49,11 +50,35 @@ public class CreateProductHandler(
             }
             newProduct.Categories = existingCategories.Item1;
         }
-        
-        await unitOfWork.Products.CreateAsync(newProduct, cancellationToken);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        var productReadDto = mapper.Map<ReadProductDto>(newProduct);
-        return ResultBuilder.CreatedResult(productReadDto);
+        using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        try
+        {
+            await unitOfWork.Products.CreateAsync(newProduct, cancellationToken);
+    
+            if (createProductCommand.Image is not null)
+            {
+                await using var imageStream = createProductCommand.Image.OpenReadStream();
+                
+                var imageUri = await unitOfWork.ProductImages.UploadFileAsync(imageStream, cancellationToken);
+
+                newProduct.ImageUri = imageUri;
+            }
+    
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            transaction.Complete();
+
+            if (newProduct.ImageUri is not null)
+            {
+                newProduct.ImageUri = unitOfWork.ProductImages.GetReadOnlyImageUri(newProduct.ImageUri);
+            }
+            var productReadDto = mapper.Map<ReadProductDto>(newProduct);
+            
+            return ResultBuilder.CreatedResult(productReadDto);
+        }
+        catch (Exception)
+        {
+            return ResultBuilder.InternalServerErrorResult<ReadProductDto>(ErrorMessages.ProductCreationFailureError);
+        }
     }
 }

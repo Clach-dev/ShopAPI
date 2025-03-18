@@ -21,6 +21,11 @@ public class GetProductByIdHandler(
             return ResultBuilder.NotFoundResult<ReadProductDto>(ErrorMessages.ProductIdNotFoundError);
         }
         
+        if (product.ImageUri != null)
+        {
+            product.ImageUri = unitOfWork.ProductImages.GetReadOnlyImageUri(product.ImageUri);
+        }
+        
         var productReadDto = mapper.Map<ReadProductDto>(product);
         return ResultBuilder.SuccessResult(productReadDto);
     }

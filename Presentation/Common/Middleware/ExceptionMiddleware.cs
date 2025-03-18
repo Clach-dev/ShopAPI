@@ -1,4 +1,5 @@
 ﻿using Application.Common.Utils;
+using MediatR;
 using Newtonsoft.Json;
 
 namespace Presentation.Common.Middleware;
@@ -25,6 +26,6 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
         context.Response.ContentType = "application/json";
         
         return context.Response.WriteAsync(JsonConvert
-            .SerializeObject(ResultBuilder.InternalServerErrorResult<byte?>(exception.Message)));
+            .SerializeObject(ResultBuilder.InternalServerErrorResult<Unit>(exception.Message)));
     }
 }

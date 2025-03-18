@@ -5,4 +5,4 @@ namespace Application.UseCases.CategoryCases.Commands.DeleteCategoryCase;
 
 public record DeleteCategoryCommand(
     Guid Id)
-    : IRequest<Result<byte?>>;
+    : IRequest<Result<Unit>>;

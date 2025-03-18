@@ -4,6 +4,7 @@ using Infrastructure.Algorithms;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,7 @@ public static class InfrastructureInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         return services
+            .AddStorage(configuration)
             .AddDatabase(configuration)
             .AddRepositories()
             .AddAlgorithms();
@@ -28,12 +30,23 @@ public static class InfrastructureInjection
                 .UseSqlServer(connectionString)
                 .UseLazyLoadingProxies());
     }
+
+    private static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAzureClients(builder =>
+        {
+            builder.AddBlobServiceClient(configuration.GetConnectionString("AzureConnectionString"));
+        });
+
+        return services;
+    }
     
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         return services
             .AddScoped<ICategoryRepository, CategoryRepository>()
             .AddScoped<IProductRepository, ProductRepository>()
+            .AddScoped<IProductImageRepository, ProductImageRepository>()
             .AddScoped<IOrderRepository, OrderRepository>()
             .AddScoped<IOrderItemRepository, OrderItemRepository>()
             .AddScoped<IUserRepository, UserRepository>()

@@ -8,9 +8,11 @@
 /// <param name="Description">string that contains Description of Product</param>
 /// <param name="Price">decimal that contains Price of Product</param>
 /// <param name="Amount">int that contains Amount of Product</param>
+/// <param name="ImageUri">Uri that contains Uri of Product Image</param>
 public record ReadProductDto(
     Guid Id,
     string Name,
     string? Description,
     decimal Price,
-    int Amount);
+    int Amount,
+    Uri? ImageUri);

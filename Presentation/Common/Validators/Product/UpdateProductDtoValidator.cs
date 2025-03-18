@@ -21,5 +21,8 @@ public class UpdateProductDtoValidator : AbstractValidator<UpdateProductDto>
 
         RuleFor(x => x.Amount)
             .NullableAmountRule();
+
+        RuleFor(x => x.Image)
+            .ValidImageFileRule();
     }
 }

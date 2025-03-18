@@ -60,7 +60,7 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are dublicate of catetegory or wrong category Id.
+        ///   Looks up a localized string similar to There are dublicate of category or wrong category Id.
         /// </summary>
         public static string CategoryConflictError {
             get {
@@ -96,16 +96,7 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product with this data is already exist.
-        /// </summary>
-        public static string ExistingProductError {
-            get {
-                return ResourceManager.GetString("ExistingProductError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  with this data is already exist.
+        ///   Looks up a localized string similar to OrderItem is already exists.
         /// </summary>
         public static string ExistingOrderItemError {
             get {
@@ -116,9 +107,9 @@ namespace Application.Common.Utils {
         /// <summary>
         ///   Looks up a localized string similar to Product with this data is already exist.
         /// </summary>
-        public static string OrderItemDataNotFoundError {
+        public static string ExistingProductError {
             get {
-                return ResourceManager.GetString("OrderItemDataNotFoundError", resourceCulture);
+                return ResourceManager.GetString("ExistingProductError", resourceCulture);
             }
         }
         
@@ -128,6 +119,15 @@ namespace Application.Common.Utils {
         public static string ExistingUserPhoneNumberError {
             get {
                 return ResourceManager.GetString("ExistingUserPhoneNumberError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image upload failure.
+        /// </summary>
+        public static string ImageUploadFailureError {
+            get {
+                return ResourceManager.GetString("ImageUploadFailureError", resourceCulture);
             }
         }
         
@@ -150,11 +150,38 @@ namespace Application.Common.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OrderItem data not found.
+        /// </summary>
+        public static string OrderItemDataNotFoundError {
+            get {
+                return ResourceManager.GetString("OrderItemDataNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item with this Id not found.
         /// </summary>
         public static string OrderItemIdNotFoundError {
             get {
                 return ResourceManager.GetString("OrderItemIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product creation failure.
+        /// </summary>
+        public static string ProductCreationFailureError {
+            get {
+                return ResourceManager.GetString("ProductCreationFailureError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product deletion failure.
+        /// </summary>
+        public static string ProductDeletionFailureError {
+            get {
+                return ResourceManager.GetString("ProductDeletionFailureError", resourceCulture);
             }
         }
         
@@ -173,6 +200,15 @@ namespace Application.Common.Utils {
         public static string ProductIdNotFoundError {
             get {
                 return ResourceManager.GetString("ProductIdNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product update failure.
+        /// </summary>
+        public static string ProductUpdateFailureError {
+            get {
+                return ResourceManager.GetString("ProductUpdateFailureError", resourceCulture);
             }
         }
         

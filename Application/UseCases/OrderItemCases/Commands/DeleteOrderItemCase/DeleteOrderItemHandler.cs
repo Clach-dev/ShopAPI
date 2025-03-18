@@ -6,21 +6,21 @@ namespace Application.UseCases.OrderItemCases.Commands.DeleteOrderItemCase;
 
 public class DeleteOrderItemHandler(
     IUnitOfWork unitOfWork)
-    : IRequestHandler<DeleteOrderItemCommand, Result<byte?>>
+    : IRequestHandler<DeleteOrderItemCommand, Result<Unit>>
 {
-    public async Task<Result<byte?>> Handle(
+    public async Task<Result<Unit>> Handle(
         DeleteOrderItemCommand deleteOrderItemCommand,
         CancellationToken cancellationToken)
     {
         var orderItem = await unitOfWork.OrderItems.GetByIdAsync(deleteOrderItemCommand.OrderItemId, cancellationToken);
         if (orderItem is null)
         {
-            return ResultBuilder.NotFoundResult<byte?>(ErrorMessages.OrderItemIdNotFoundError);
+            return ResultBuilder.NotFoundResult<Unit>(ErrorMessages.OrderItemIdNotFoundError);
         }
         
         await unitOfWork.OrderItems.Delete(orderItem);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        return ResultBuilder.NoContentResult<byte?>();
+        return ResultBuilder.NoContentResult<Unit>();
     }
 }

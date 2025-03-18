@@ -19,5 +19,8 @@ public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
 
         RuleFor(x => x.Amount)
             .AmountRule();
+
+        RuleFor(x => x.Image)
+            .ValidImageFileRule();
     }
 }

@@ -60,4 +60,22 @@
     <data name="CategoryConflictError" xml:space="preserve">
         <value>There are dublicate of catetegory or wrong category Id</value>
     </data>
+    <data name="ImageUploadFailureError" xml:space="preserve">
+        <value>Image upload failure</value>
+    </data>
+    <data name="ProductCreationFailureError" xml:space="preserve">
+        <value>Product creation failure</value>
+    </data>
+    <data name="ExistingOrderItemError" xml:space="preserve">
+        <value>OrderItem is already exists</value>
+    </data>
+    <data name="OrderItemDataNotFoundError" xml:space="preserve">
+        <value>OrderItem data not found</value>
+    </data>
+    <data name="ProductUpdateFailureError" xml:space="preserve">
+        <value>Product update failure</value>
+    </data>
+    <data name="ProductDeletionFailureError" xml:space="preserve">
+        <value>Product deletion failure</value>
+    </data>
 </root>

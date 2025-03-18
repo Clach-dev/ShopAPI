@@ -5,4 +5,4 @@ namespace Application.UseCases.OrderItemCases.Commands.DeleteOrderItemCase;
 
 public record DeleteOrderItemCommand(
     Guid OrderItemId)
-    : IRequest<Result<byte?>>;
+    : IRequest<Result<Unit>>;

@@ -1,13 +1,18 @@
-﻿    using Domain.Interfaces.IRepositories;
+﻿using Azure.Storage.Blobs;
+    using Domain.Interfaces.IRepositories;
+    using Microsoft.EntityFrameworkCore.Storage;
+    using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data.Repositories;
 
-public class UnitOfWork(ShopDbContext context) : IUnitOfWork
+public class UnitOfWork(BlobServiceClient blobServiceClient, ShopDbContext context, IConfiguration configuration) : IUnitOfWork
 {
     private ICategoryRepository? _categoryRepository;
 
     private IProductRepository? _productRepository;
 
+    private IProductImageRepository? _productImageRepository;
+        
     private IOrderRepository? _orderRepository;
 
     private IOrderItemRepository? _orderItemRepository;
@@ -19,6 +24,8 @@ public class UnitOfWork(ShopDbContext context) : IUnitOfWork
     public ICategoryRepository Categories => _categoryRepository ??= new CategoryRepository(context);
     
     public IProductRepository Products => _productRepository ??= new ProductRepository(context);
+    
+    public IProductImageRepository ProductImages => _productImageRepository ??= new ProductImageRepository(blobServiceClient, configuration);
     
     public IOrderRepository Orders => _orderRepository ??= new OrderRepository(context);
     
@@ -32,6 +39,13 @@ public class UnitOfWork(ShopDbContext context) : IUnitOfWork
     {
         return await context.SaveChangesAsync(cancellationToken);
     }
+    
+    // public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken)
+    // {
+    //     return await context.Database.BeginTransactionAsync(cancellationToken);
+    // }
+    
+    
     
     public void Dispose()
     {
